@@ -1,0 +1,12 @@
+{% extends "sell/base.html" %}
+{% block content %}
+
+<form action="/sell/login" method="post">
+
+
+    <input type="text" name="mobile" value="">
+    <input type="password" name="password" value="">
+    <input type="submit" value="登录">
+</form>
+<p>{{error}}</p>
+{% endblock %}

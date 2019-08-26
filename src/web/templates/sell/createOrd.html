@@ -1,0 +1,16 @@
+{% extends "sell/base.html" %}
+{% block content %}
+<h1>请务必填写员工的正确信息</h1>
+<form action="/sell/createOrd" method="post">
+    <input type="text" value="name">
+    <select name="dept" id="">
+        <option value="33"></option>
+    </select>
+    <input type="text" value="no">
+    <input type="province" value="no">
+    <input type="city" value="no">
+    <input type="town" value="no">
+    <input type="address" value="no">
+    <input type="submit" value="create order">
+</form>
+{% endblock %}
