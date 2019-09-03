@@ -12,22 +12,6 @@ def index():
     return render_template("sell/login.html", user=user)
 
 
-@mod.route('/sell/login', methods=['POST'])
-@swag_from("sell_login.yml")
-def login():
-    content = request.data
-    data = json.loads(str(content, encoding="utf-8"))
-    mobile = str(data['mobile'])
-    password = str(data['password'])
-    if mobile == '' or password == '':
-        return '{"code": "fail", "msg": "Invalid username/password"}'
-    if user_service.find_user(mobile, password):
-        session["mobile"] = mobile
-        return '{"code": "success"}'
-    else:
-        return '{"code": "fail", "msg": "user not exists"}'
-
-
 @mod.route('/sell/createOrd', methods=['GET'])
 def createOrd():
     pid = request.form['pid']
