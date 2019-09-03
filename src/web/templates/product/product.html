@@ -1,0 +1,18 @@
+{% extends "sell/base.html" %}
+{% block content %}
+
+
+{% if user.mobile %}
+   <h1>Hi, {{user.mobile}}!</h1>
+{% endif %}
+<input type="hidden" name="id" value="{{product.id}}">
+<h3>{{product.title}}</h3>
+<p>{{product.content}}</p>
+
+<form action="/ord/create" method="post">
+    <input type="hidden" name="form_id" value="1">
+    <input type="hidden" name="product" value="{{product.code}}_1">
+    <input type="submit" value="submit">
+</form>
+
+{% endblock %}

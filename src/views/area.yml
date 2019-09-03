@@ -1,0 +1,5 @@
+area
+---
+responses:
+  200:
+    description: description

@@ -1,5 +1,8 @@
 {% extends "sell/base.html" %}
 {% block content %}
 <h1>Hi, {{user.mobile}}!</h1>
-<a href="/sell/createOrd">exchange</a>
+
+<h3>{{product.title}}</h3>
+<p>{{product.content}}</p>
+
 {% endblock %}

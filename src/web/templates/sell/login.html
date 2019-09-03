@@ -1,12 +1,35 @@
 {% extends "sell/base.html" %}
 {% block content %}
 
-<form action="/sell/login" method="post">
-
-
+<form  id="loginForm">
     <input type="text" name="mobile" value="">
     <input type="password" name="password" value="">
-    <input type="submit" value="登录">
+    <input id="submit" type="submit" value="登录">
 </form>
-<p>{{error}}</p>
+<p id="error"></p>
+<script>
+    $("#loginForm").on("submit",function(){
+        var data = {
+                mobile:$("[name=mobile]").val(),
+                password:$("[name=password]").val()
+            };
+         $.ajax({
+            url: "/sell/login",
+            method: "POST",
+            contentType:'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === "success") {
+                    location.href="/product/5cTJxqUoUPXmucpTPni9ZL"
+                }
+            },
+            error: function (err) {
+                console.error(err);
+            }
+        });
+        return false;
+    })
+
+</script>
 {% endblock %}
