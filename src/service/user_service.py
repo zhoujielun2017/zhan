@@ -26,9 +26,7 @@ def page(page:Pagination):
         print(user.mobile)
 
 def find_user(mobile: str, password: str) -> User:
-    # owner.mobile = mobile
-    # owner.password = password
-    user = User.objects(mobile=mobile,password=password).first()
+    user = User.objects(mobile=str(mobile),password=str(password)).first()
     return user
 
 

@@ -20,8 +20,12 @@ def detail(id):
 def save():
     content = request.data
     data = json.loads(str(content, encoding="utf-8"))
-    mobile = str(data['mobile'])
-    password = str(data['password'])
+    mobile = data.get('mobile')
+    password = data.get('password')
+    if mobile or password:
+        return '{"code": "fail", "msg": "Invalid username/password"}'
+    if user_service.find_user(mobile, password):
+        return '{"code": "user.exists", "msg": "user exists"}'
     save = UserSave()
     save.mobile = mobile
     save.password = password
