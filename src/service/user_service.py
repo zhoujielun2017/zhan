@@ -6,6 +6,7 @@ import bson
 
 from model.user import User
 from model.pagination import Pagination
+from model.user_save import UserSave
 
 
 def all():
@@ -31,10 +32,10 @@ def find_user(mobile: str, password: str) -> User:
     return user
 
 
-def insert_user(mobile: str, password: str) -> User:
+def save(userSave: UserSave) -> User:
     owner = User()
-    owner.mobile = mobile
-    owner.password = password
+    owner.mobile = userSave.mobile
+    owner.password = userSave.password
     return owner.save()
 
 

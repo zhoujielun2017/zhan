@@ -6,7 +6,7 @@ class ProductSave(object):
 
     @code.setter
     def code(self, value):
-        self.code = value
+        self._code = value
 
     @property
     def title(self):

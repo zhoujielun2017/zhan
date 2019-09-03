@@ -17,8 +17,8 @@ def index():
 def login():
     content = request.data
     data = json.loads(str(content, encoding="utf-8"))
-    mobile = data['mobile']
-    password = data['password']
+    mobile = str(data['mobile'])
+    password = str(data['password'])
     if mobile == '' or password == '':
         return '{"code": "fail", "msg": "Invalid username/password"}'
     if user_service.find_user(mobile, password):
