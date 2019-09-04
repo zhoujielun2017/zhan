@@ -12,7 +12,7 @@ def login_in():
     data = json.loads(str(content, encoding="utf-8"))
     mobile = data.get('mobile')
     password = data.get('password')
-    if mobile  or password :
+    if mobile == None or password == None:
         return '{"code": "fail", "msg": "Invalid username/password"}'
     if user_service.find_user(mobile, password):
         session["mobile"] = mobile

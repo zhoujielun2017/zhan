@@ -1,0 +1,26 @@
+添加礼品卡
+---
+parameters:
+  - name: body
+    in: body
+    description: JSON parameters.
+    schema:
+      properties:
+        area:
+          type: string
+          example: "01"
+        year:
+          type: string
+          example: "2019"
+        unit:
+          type: string
+          example: "01"
+        print:
+          type: string
+          example: "01"
+        num:
+          type: string
+          example: "000001"
+responses:
+  200:
+    description: description

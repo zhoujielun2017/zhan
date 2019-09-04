@@ -1,0 +1,13 @@
+获取商品
+---
+parameters:
+  - code: path
+    schema:
+      properties:
+        mobile:
+          type: string
+          description: mobile.
+          example: 5cTJxqUoUPXmucpTPni9ZL
+responses:
+  200:
+    description: description

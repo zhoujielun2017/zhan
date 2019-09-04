@@ -12,7 +12,7 @@ def detail(id):
     mobile = session.get("mobile")
     user = {'mobile': mobile}
     p = user_service.find_by_code(id)
-    return render_template("user/user.html", user=user)
+    return '{"code": "success","data":"%s"}' % p
 
 
 @user.route('/users', methods=['POST'])

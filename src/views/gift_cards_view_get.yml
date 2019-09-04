@@ -1,0 +1,10 @@
+礼品卡列表
+---
+parameters:
+  - name: page
+    in: query
+  - name: page_size
+    in: query
+responses:
+  200:
+    description: description
