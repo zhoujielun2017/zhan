@@ -9,6 +9,9 @@ class User(Document):
     name = StringField()
     mobile = StringField()
     password = StringField()
+    status = IntField()
+    type = IntField()
+    login_time = DateTimeField()
     create_time = DateTimeField(default=datetime.datetime.utcnow)
     update_time = DateTimeField(default=datetime.datetime.utcnow)
 

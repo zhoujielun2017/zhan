@@ -1,0 +1,19 @@
+更新礼品卡为已用
+---
+tags:
+  - gift_card
+parameters:
+  - name: body
+    in: body
+    description: JSON parameters.
+    schema:
+      properties:
+        code:
+          type: string
+          example: "0120190101000001"
+        password:
+          type: string
+          example: "201920192019201922"
+responses:
+  200:
+    description: description

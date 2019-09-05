@@ -1,5 +1,7 @@
-from flask import Blueprint, render_template, request, session, json
+from flask import Blueprint, render_template, request, session, json, jsonify
 from flasgger import swag_from
+
+from model.result import Result
 from service import user_service, user_service
 
 login = Blueprint('login', __name__)
@@ -16,7 +18,7 @@ def login_in():
         return '{"code": "fail", "msg": "Invalid username/password"}'
     if user_service.find_user(mobile, password):
         session["mobile"] = mobile
-        return '{"code": "success"}'
+        return jsonify(Result().success())
     else:
         return '{"code": "fail", "msg": "user not exists"}'
 

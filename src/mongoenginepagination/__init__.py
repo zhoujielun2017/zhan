@@ -6,24 +6,26 @@ import mongoengine
 from mongoengine.queryset import MultipleObjectsReturned, DoesNotExist, QuerySet
 from mongoengine import ValidationError
 
+
 class MongoEnginePaginationException(Exception):
     pass
+
 
 class BaseQuerySet(QuerySet):
     """
     A base queryset with handy extras
     """
-    def paginate(self, page, page_size, error_out=True):
 
+    def paginate(self, page, page_size, error_out=True):
         return Pagination(self, page, page_size)
 
     def paginate_field(self, field_name, doc_id, page, page_size,
-            total=None):
+                       total=None):
         item = self.get(id=doc_id)
         count = getattr(item, field_name + "_count", '')
         total = total or count or len(getattr(item, field_name))
         return ListFieldPagination(self, field_name, doc_id, page, page_size,
-            total=total)
+                                   total=total)
 
 
 class Document(mongoengine.Document):
@@ -62,7 +64,7 @@ class Pagination(object):
     def prev(self, error_out=False):
         """Returns a :class:`Pagination` object for the previous page."""
         assert self.iterable is not None, 'an object is required ' \
-                                       'for this method to work'
+                                          'for this method to work'
         iterable = self.iterable
         if isinstance(iterable, QuerySet):
             iterable._skip = None
@@ -83,7 +85,7 @@ class Pagination(object):
     def next(self, error_out=False):
         """Returns a :class:`Pagination` object for the next page."""
         assert self.iterable is not None, 'an object is required ' \
-                                       'for this method to work'
+                                          'for this method to work'
         iterable = self.iterable
         if isinstance(iterable, QuerySet):
             iterable._skip = None
@@ -129,9 +131,9 @@ class Pagination(object):
         last = 0
         for num in range(1, self.pages + 1):
             if num <= left_edge or \
-               (num > self.page - left_current - 1 and
-                num < self.page + right_current) or \
-               num > self.pages - right_edge:
+                    (num > self.page - left_current - 1 and
+                     num < self.page + right_current) or \
+                    num > self.pages - right_edge:
                 if last + 1 != num:
                     yield None
                 yield num
@@ -166,7 +168,7 @@ class ListFieldPagination(Pagination):
         field_attrs = {field_name: {"$slice": [start_index, page_size]}}
 
         self.items = getattr(queryset().fields(**field_attrs
-            ).first(), field_name)
+                                               ).first(), field_name)
 
         self.total = total or len(self.items)
 
@@ -174,17 +176,18 @@ class ListFieldPagination(Pagination):
             raise MongoEnginePaginationException()
 
     def prev(self, error_out=False):
-        """Returns a :class:`Pagination` object for the previous page."""
-        assert self.items is not None, 'a query object is required ' \
-                                       'for this method to work'
-        return self.__class__(self.queryset, self.doc_id, self.field_name,
-            self.page - 1, self.page_size, self.total)
+        return self.page > 1
 
     def next(self, error_out=False):
-        """Returns a :class:`Pagination` object for the next page."""
-        assert self.iterable is not None, 'a query object is required ' \
-                                       'for this method to work'
-        return self.__class__(self.queryset, self.doc_id, self.field_name,
-            self.page + 1, self.page_size, self.total)
+        return self.page*self.page_size < self.total
 
-
+    def to_dict(self):
+        queryset = list(map(lambda employee: employee.to_dict(), list(self.queryset)))
+        return {
+            "page": self.page,
+            "page_size": self.page_size,
+            "total": self.total,
+            "prev": self.prev(),
+            "next": self.next(),
+            "list": queryset
+        }

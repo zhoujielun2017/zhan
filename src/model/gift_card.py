@@ -1,6 +1,7 @@
 import datetime
 
 from mongoengine import *
+from mongoenginepagination import Document
 
 connect(alias='gift_card', db='gift_card')
 
@@ -15,8 +16,10 @@ class GiftCard(Document):
     update_time = DateTimeField(default=datetime.datetime.utcnow)
     meta = {'db_alias': 'gift_card'}
 
-    def as_dict(self):
-        return {"code": self.code,
+    def to_dict(self):
+        return {
+                "id":self._id,
+                "code": self.code,
                 "password": self.password,
                 "status": self.status,
                 "create_time": self.create_time.strftime( '%Y-%m-%d %H:%M:%S'),

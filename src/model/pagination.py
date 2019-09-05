@@ -1,8 +1,8 @@
 class Pagination(object):
 
-    def __init__(self,page:int,page_size:int):
-        self.page = 1
-        self.page_size = 10
+    def __init__(self,page=1,page_size=10):
+        self.page = int(page)
+        self.page_size = int(page_size)
 
     @property
     def start(self):

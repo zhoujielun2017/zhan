@@ -45,12 +45,16 @@ class GiftCardServiceTest(unittest.TestCase):
         r.year="2019"
         r.unit="01"
         r.num="01"
-        gift_card_service.find_by_code(r.code())
+        return gift_card_service.find_by_code(r.code())
+
+    def test_delete(self):
+        gift_card_service.delete("5d70704398df4d69582faf46")
+
+    def test_update(self):
+        gift_card_service.update("0120190101000011","766326562130472281")
 
     def test_page(self):
-        # r= Pagination(1,10)
-        # pros = gift_card_service.page(r)
-        # aa = list(map(lambda employee: employee.as_dict(), list(pros)))
-        # r = Result()
-        # r.data=aa
-        print(jsonify({"a":1}))
+        r= Pagination(1,10)
+        pros = gift_card_service.page(r)
+        for item in pros.queryset:
+            print(item.code)

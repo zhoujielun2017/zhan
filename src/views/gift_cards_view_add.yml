@@ -1,7 +1,7 @@
 添加礼品卡
 ---
 tags:
-  - 礼品卡
+  - gift_card
 parameters:
   - name: body
     in: body

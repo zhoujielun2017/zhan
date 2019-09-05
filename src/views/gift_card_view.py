@@ -39,14 +39,14 @@ def save():
 
 
 @gift_card.route('/gift_cards', methods=['PUT'])
+@swag_from("gift_cards_view_put.yml")
 def update():
     content = request.data
     data = json.loads(str(content, encoding="utf-8"))
-    mobile = str(data['mobile'])
+    code = str(data['code'])
     password = str(data['password'])
-    gift_card = {'mobile': mobile, 'password': password}
-    id = gift_card_service.save(gift_card)
-    return jsonify({"code": "success","data":id})
+    id = gift_card_service.update_used(code,password)
+    return jsonify(Result().success())
 
 
 @gift_card.route('/gift_cards', methods=['GET'])
@@ -56,16 +56,16 @@ def search():
     page_size = request.args.get("page_size")
     p = Pagination(page, page_size)
     pros = gift_card_service.page(p)
-    aa = list(map(lambda employee: employee.as_dict(), list(pros)))
     r = Result()
-    r.data = aa
+    r.data =pros.to_dict()
     return jsonify(r.success())
 
 
 @gift_card.route('/<id>', methods=['DELETE'])
+@swag_from("gift_cards_view_delete.yml")
 def delete(id):
     gift_card_service.delete(id)
-    return '{"code": "success","data":"%s"}' % id
+    return jsonify(Result().success())
 
 
 @gift_card.route('/export', methods=['GET'])
@@ -76,5 +76,5 @@ def export():
     p = Pagination(page, page_size)
     pros = gift_card_service.page(p)
     column_names = ['code', 'password']
-    return excel.make_response_from_query_sets(pros, column_names, "xls")
+    return excel.make_response_from_query_sets(pros.queryset, column_names, "xls")
 

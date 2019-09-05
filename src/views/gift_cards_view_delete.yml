@@ -1,0 +1,11 @@
+删除礼品卡
+---
+tags:
+  - gift_card
+parameters:
+  - name: id
+    in: path
+    default: 5d70704398df4d69582faf46
+responses:
+  200:
+    description: description

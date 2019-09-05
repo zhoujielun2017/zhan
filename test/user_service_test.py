@@ -7,7 +7,6 @@ from service import user_service
 
 
 class ProductServiceTest(unittest.TestCase):
-
     def test_save(self):
         save = UserSave()
         save.mobile = "123"

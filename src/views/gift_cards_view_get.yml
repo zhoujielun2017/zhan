@@ -1,12 +1,14 @@
 礼品卡列表
 ---
 tags:
-  - 礼品卡
+  - gift_card
 parameters:
   - name: page
     in: query
+    default: 1
   - name: page_size
     in: query
+    default: 10
 responses:
   200:
     description: description
