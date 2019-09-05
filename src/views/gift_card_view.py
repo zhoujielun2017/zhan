@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session, json
+from flask import Blueprint, render_template, request, session, json, jsonify
 from flasgger import swag_from
 
 from model.gift_card_code import GiftCardCode
@@ -35,7 +35,7 @@ def save():
         code.num = num
         if gift_card_service.find_by_code(code.code()) is None:
             gift_card_service.save(code)
-    return Result().success()
+    return jsonify(Result().success())
 
 
 @gift_card.route('/gift_cards', methods=['PUT'])
@@ -46,7 +46,7 @@ def update():
     password = str(data['password'])
     gift_card = {'mobile': mobile, 'password': password}
     id = gift_card_service.save(gift_card)
-    return '{"code": "success","data":"%s"}' % id
+    return jsonify({"code": "success","data":id})
 
 
 @gift_card.route('/gift_cards', methods=['GET'])
@@ -59,7 +59,7 @@ def search():
     aa = list(map(lambda employee: employee.as_dict(), list(pros)))
     r = Result()
     r.data = aa
-    return r.success()
+    return jsonify(r.success())
 
 
 @gift_card.route('/<id>', methods=['DELETE'])

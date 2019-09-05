@@ -1,9 +1,9 @@
 class Result(object):
 
     def __init__(self) -> None:
-        self._data=None
-        self._code=None
-        self._msg=None
+        self._data = None
+        self._code = None
+        self._msg = None
 
     @property
     def code(self):
@@ -21,7 +21,6 @@ class Result(object):
     def msg(self, value):
         self._msg = value
 
-
     @property
     def data(self):
         return self._data
@@ -31,9 +30,9 @@ class Result(object):
         self._data = value
 
     def success(self):
-        if self._data==None:
-            return '{"code": "success"}'
-        return '{"code": "success",data:%s}' % self._data
+        if self._data == None:
+            return {"code": "success"}
+        return {"code": "success", "data": self._data}
 
     def fail(self):
-        return '{"code": "%s","msg":"%s"}' % (self._code,self._msg)
+        return {"code": self._code, "msg": self._msg}

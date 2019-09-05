@@ -45,3 +45,8 @@ class DivisionServiceTest(unittest.TestCase):
         m = hashlib.md5()
         m.update(b'zxcvzxcvgithub.com')
         print(m.hexdigest())
+
+    def test_md5(self):
+        m = hashlib.md5()
+        m.update(b'zxcvzxcvgithub.com')
+        print(m.hexdigest())

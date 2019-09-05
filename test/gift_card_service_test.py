@@ -3,6 +3,8 @@ import random
 import sys
 import unittest
 
+from flask import jsonify
+
 from model.gift_card import GiftCard
 from model.gift_card_code import GiftCardCode
 from model.pagination import Pagination
@@ -46,9 +48,9 @@ class GiftCardServiceTest(unittest.TestCase):
         gift_card_service.find_by_code(r.code())
 
     def test_page(self):
-        r= Pagination(1,10)
-        pros = gift_card_service.page(r)
-        aa = list(map(lambda employee: employee.as_dict(), list(pros)))
-        r = Result()
-        r.data=aa
-        print(r.success())
+        # r= Pagination(1,10)
+        # pros = gift_card_service.page(r)
+        # aa = list(map(lambda employee: employee.as_dict(), list(pros)))
+        # r = Result()
+        # r.data=aa
+        print(jsonify({"a":1}))
