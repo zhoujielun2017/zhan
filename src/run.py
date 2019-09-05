@@ -4,7 +4,7 @@ from flask import Flask
 from flasgger import Swagger
 import os
 from views import area_view, product_view, sell_view, ord_view, login_view, user_view, gift_card_view
-
+import flask_excel as excel
 from views.manager import user
 
 app = Flask(__name__,
@@ -15,6 +15,7 @@ app = Flask(__name__,
 
 
 Swagger(app)
+excel.init_excel(app)
 
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)

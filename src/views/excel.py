@@ -1,4 +1,3 @@
-from app import app
 import flask_excel as excel
 
 excel.init_excel(app)

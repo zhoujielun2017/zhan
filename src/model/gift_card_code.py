@@ -39,7 +39,7 @@ class GiftCardCode(object):
 
     @num.setter
     def num(self, value):
-        self._num = value
+        self._num = str(value).zfill(6)
 
     def code(self):
         return str(self.area)+str(self.year)+str(self.unit)+str(self.print)+str(self.num)

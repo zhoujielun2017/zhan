@@ -6,6 +6,7 @@ from model.pagination import Pagination
 from model.product_save import ProductSave
 from model.result import Result
 from service import user_service, product_service, gift_card_service
+import flask_excel as excel
 
 gift_card = Blueprint('gift_card', __name__)
 
@@ -19,20 +20,21 @@ def save():
     year = data.get('year')
     unit = data.get('unit')
     print = data.get('print')
-    num = data.get('num')
-    if area==None or year==None or unit==None or num == None or print == None:
+    num_start = data.get('num_start')
+    num_end = data.get('num_end')
+    if area == None or year == None or unit == None or num_start == None or print == None:
         return Result("param.null", "Invalid param").fail()
-    if len(area) !=2 or len(year) != 4 or len(unit) !=2 or len(print) !=2 or len(num) != 6:
+    if len(area) != 2 or len(year) != 4 or len(unit) != 2 or len(print) != 2:
         return Result("param.length", "param length error").fail()
-    code = GiftCardCode()
-    code.area=area
-    code.year=year
-    code.unit=unit
-    code.print=print
-    code.num=num
-    if gift_card_service.find_by_code(code.code()):
-        return Result("gift_card.exists", "gift_card exists").fail()
-    id = gift_card_service.save(code)
+    for num in range(int(num_start), int(num_end)):
+        code = GiftCardCode()
+        code.area = area
+        code.year = year
+        code.unit = unit
+        code.print = print
+        code.num = num
+        if gift_card_service.find_by_code(code.code()) is None:
+            gift_card_service.save(code)
     return Result().success()
 
 
@@ -52,7 +54,7 @@ def update():
 def search():
     page = request.args.get("page")
     page_size = request.args.get("page_size")
-    p=Pagination(page,page_size)
+    p = Pagination(page, page_size)
     pros = gift_card_service.page(p)
     aa = list(map(lambda employee: employee.as_dict(), list(pros)))
     r = Result()
@@ -64,3 +66,15 @@ def search():
 def delete(id):
     gift_card_service.delete(id)
     return '{"code": "success","data":"%s"}' % id
+
+
+@gift_card.route('/export', methods=['GET'])
+@swag_from("gift_cards_view_export.yml")
+def export():
+    page = request.args.get("page")
+    page_size = request.args.get("page_size")
+    p = Pagination(page, page_size)
+    pros = gift_card_service.page(p)
+    column_names = ['code', 'password']
+    return excel.make_response_from_query_sets(pros, column_names, "xls")
+

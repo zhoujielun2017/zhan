@@ -1,5 +1,7 @@
 添加礼品卡
 ---
+tags:
+  - 礼品卡
 parameters:
   - name: body
     in: body
@@ -18,9 +20,12 @@ parameters:
         print:
           type: string
           example: "01"
-        num:
-          type: string
+        num_start:
+          type: int
           example: "000001"
+        num_end:
+          type: int
+          example: "000010"
 responses:
   200:
     description: description

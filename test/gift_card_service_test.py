@@ -33,7 +33,7 @@ class GiftCardServiceTest(unittest.TestCase):
         r.print="01"
         r.year="2019"
         r.unit="01"
-        r.num="01"
+        r.num="000011"
         gift_card_service.save(r)
 
     def test_find_by_code(self):

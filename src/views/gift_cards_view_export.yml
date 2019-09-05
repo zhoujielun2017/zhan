@@ -1,4 +1,4 @@
-礼品卡列表
+礼品卡列表导出
 ---
 tags:
   - 礼品卡
@@ -7,6 +7,8 @@ parameters:
     in: query
   - name: page_size
     in: query
+produces:
+  - application/vnd.ms-excel
 responses:
   200:
     description: description

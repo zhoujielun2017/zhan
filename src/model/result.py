@@ -33,7 +33,7 @@ class Result(object):
     def success(self):
         if self._data==None:
             return '{"code": "success"}'
-        return '{"code": "success",data:"%s"}' % self._data
+        return '{"code": "success",data:%s}' % self._data
 
     def fail(self):
         return '{"code": "%s","msg":"%s"}' % (self._code,self._msg)

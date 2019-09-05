@@ -38,5 +38,6 @@ def save(code: GiftCardCode) -> GiftCard:
     p.code = code.code()
     r1 = random.randint(100000000, 999999999)
     r2 = random.randint(100000000, 999999999)
+    p.status=0
     p.password = str(r1) + str(r2)
     return p.save()
