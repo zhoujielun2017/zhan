@@ -2,6 +2,7 @@ import unittest
 
 from service import division_service
 import pyexcel
+import hashlib
 
 class DivisionServiceTest(unittest.TestCase):
 
@@ -38,3 +39,9 @@ class DivisionServiceTest(unittest.TestCase):
 
         res = 'aaaaa' if x > y else 'bbbbbbb'  # 三元表达式
         print(res)
+
+
+    def test_md5(self):
+        m = hashlib.md5()
+        m.update(b'zxcvzxcvgithub.com')
+        print(m.hexdigest())
