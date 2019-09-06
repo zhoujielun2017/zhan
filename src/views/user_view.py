@@ -1,6 +1,7 @@
 from flasgger import swag_from
-from flask import Blueprint, render_template, request, session, json
+from flask import Blueprint, render_template, request, session, json, jsonify
 
+from model.result import Result
 from model.user_save import UserSave
 from service import user_service
 
@@ -12,11 +13,11 @@ def detail(id):
     mobile = session.get("mobile")
     user = {'mobile': mobile}
     p = user_service.find_by_code(id)
-    return '{"code": "success","data":"%s"}' % p
+    return jsonify(Result().success())
 
 
 @user.route('/users', methods=['POST'])
-@swag_from("user_view.yml")
+@swag_from("yml/user_view_post.yml")
 def save():
     content = request.data
     data = json.loads(str(content, encoding="utf-8"))
@@ -30,18 +31,18 @@ def save():
     save.mobile = mobile
     save.password = password
     id = user_service.save(save)
-    return '{"code": "success","data":"%s"}' % id.id
+    return jsonify(Result().success())
 
 
 @user.route('/users', methods=['PUT'])
+@swag_from("yml/user_view_put.yml")
 def update():
     content = request.data
     data = json.loads(str(content, encoding="utf-8"))
-    mobile = str(data['mobile'])
     password = str(data['password'])
-    user = {'mobile': mobile, 'password': password}
-    id = user_service.save(user)
-    return '{"code": "success","data":"%s"}' % id
+    # user = {'mobile': mobile, 'password': password}
+    # id = user_service.save(user)
+    return jsonify(Result().success())
 
 
 @user.route('/users', methods=['GET'])

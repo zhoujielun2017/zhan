@@ -1,0 +1,7 @@
+图片上传演示页
+---
+tags:
+  - file
+responses:
+  200:
+    description: description

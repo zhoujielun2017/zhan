@@ -1,0 +1,25 @@
+商品保存
+---
+tags:
+  - product
+parameters:
+  - name: body
+    in: body
+    description: JSON parameters.
+    schema:
+      properties:
+        title:
+          type: string
+          example: "title"
+        content:
+          type: string
+          example: "contet"
+        main_pic:
+          type: string
+          example: "/2019/09/05/12312312.jpg"
+        pics:
+          type: string
+          example: "/2019/09/05/12312312.jpg,/2019/09/05/1231238934.jpg"
+responses:
+  200:
+    description: description

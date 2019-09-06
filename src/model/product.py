@@ -1,4 +1,5 @@
 from mongoengine import *
+from mongoenginepagination import Document
 import datetime
 
 connect(alias='product', db='product')
@@ -23,6 +24,15 @@ class Product(Document):
     create_time = DateTimeField(default=datetime.datetime.utcnow)
     update_time = DateTimeField(default=datetime.datetime.utcnow)
     meta = {'db_alias': 'product'}
+
+    def to_dict(self):
+        return {
+                "code": self.code,
+                "content": self.content,
+                "main_pic": self.main_pic,
+                "pics": self.pics,
+                "create_time": self.create_time.strftime( '%Y-%m-%d %H:%M:%S'),
+                "update_time": self.update_time.strftime( '%Y-%m-%d %H:%M:%S')}
 
 
 if __name__ == '__main__':

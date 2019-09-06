@@ -1,6 +1,14 @@
 class UserSave(object):
 
     @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, value):
+        self._id = value
+
+    @property
     def mobile(self):
         return self._mobile
 
@@ -15,3 +23,4 @@ class UserSave(object):
     @password.setter
     def password(self, value):
         self._password = value
+

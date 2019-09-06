@@ -1,0 +1,14 @@
+商品列表
+---
+tags:
+  - product
+parameters:
+  - name: page
+    in: query
+    default: 1
+  - name: page_size
+    in: query
+    default: 10
+responses:
+  200:
+    description: description

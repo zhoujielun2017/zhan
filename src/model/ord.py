@@ -1,4 +1,5 @@
 from mongoengine import *
+from mongoenginepagination import Document
 import datetime
 
 connect(alias='ord', db='ord')

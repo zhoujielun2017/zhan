@@ -18,10 +18,11 @@ def all():
 
 
 def page(page: Pagination):
-    users = Product.objects[page.start:page.end]
-    print(users)
-    for user in users:
-        print(user.mobile)
+    id = Product.objects.first().id
+    total = Product.objects.count()
+    users = Product.objects.paginate_field('code', id, page.page,
+                                           page_size=page.page_size,total=total)
+    return users
 
 
 def find_by_id(id: str) -> Product:
@@ -34,9 +35,11 @@ def find_by_code(code: str) -> Product:
 
 def save(save: ProductSave) -> Product:
     p = Product()
-    p.code=shortuuid.uuid()
+    p.code = shortuuid.uuid()
     p.title = save.title
     p.content = save.content
+    p.main_pic = save.main_pic
+    p.pics = save.pics
     p.view_count = 0
     p.stock = 0
     return p.save()

@@ -2,7 +2,7 @@ class ProductSave(object):
 
     @property
     def code(self):
-        return self.code
+        return self._code
 
     @code.setter
     def code(self, value):
@@ -24,3 +24,19 @@ class ProductSave(object):
     def content(self, value):
         self._content = value
 
+
+    @property
+    def main_pic(self):
+        return self._main_pic
+
+    @main_pic.setter
+    def main_pic(self, value):
+        self._main_pic = value
+
+    @property
+    def pics(self):
+        return self._pics
+
+    @pics.setter
+    def pics(self, value):
+        self._pics = value

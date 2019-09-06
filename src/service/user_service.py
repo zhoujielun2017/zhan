@@ -3,6 +3,7 @@ from typing import List, Optional
 import datetime
 
 import bson
+from mongoengine import DoesNotExist
 
 from model.user import User
 from model.pagination import Pagination
@@ -17,6 +18,13 @@ def all():
         print(user.mobile)
 
 
+def find_by_id(id: str):
+    try:
+        return User.objects.get(pk=id)
+    except DoesNotExist:
+        return None
+
+
 def page(page:Pagination):
     # owner.mobile = mobile
     # owner.password = password
@@ -25,9 +33,16 @@ def page(page:Pagination):
     for user in users:
         print(user.mobile)
 
+
 def find_user(mobile: str, password: str) -> User:
     user = User.objects(mobile=str(mobile),password=str(password)).first()
     return user
+
+def update(userSave: UserSave) -> User:
+    owner = User()
+    owner.mobile = userSave.mobile
+    owner.password = userSave.password
+    return owner.save()
 
 
 def save(userSave: UserSave) -> User:
@@ -35,14 +50,3 @@ def save(userSave: UserSave) -> User:
     owner.mobile = userSave.mobile
     owner.password = userSave.password
     return owner.save()
-
-
-if __name__ == '__main__':
-    # all()
-    print("------")
-    p = Pagination()
-    page()
-    # id = insert_user("123","123")
-    # print(id)
-    # print(id.id)
-    # print(id.mobile)

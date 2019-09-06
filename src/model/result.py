@@ -29,10 +29,12 @@ class Result(object):
     def data(self, value):
         self._data = value
 
-    def success(self):
-        if self._data == None:
-            return {"code": "success"}
-        return {"code": "success", "data": self._data}
+    def success(self, *args):
+        if args:
+            return {"code": "success", "data": args[0]}
+        return {"code": "success"}
 
-    def fail(self):
-        return {"code": self._code, "msg": self._msg}
+    def fail(self, **kwargs):
+        if kwargs:
+            return {"code": kwargs.get("code"), "msg": kwargs.get("msg")}
+        return {"code": "fail"}

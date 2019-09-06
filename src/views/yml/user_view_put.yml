@@ -1,0 +1,21 @@
+更新用户(未实现)
+---
+tags:
+  - user
+parameters:
+  - name: body
+    in: body
+    description: JSON parameters.
+    schema:
+      properties:
+        mobile:
+          type: string
+          description: mobile.
+          example: 123
+        password:
+          type: string
+          description: password.
+          example: 123
+responses:
+  200:
+    description: description

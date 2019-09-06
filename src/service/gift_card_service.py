@@ -23,8 +23,9 @@ def all():
 
 def page(page: Pagination):
     id = GiftCard.objects.first().id
+    total = GiftCard.objects.count()
     users = GiftCard.objects.paginate_field('code', id, page.page,
-                                            page_size=page.page_size)
+                                            page_size=page.page_size,total=total)
     return users
 
 

@@ -1,0 +1,11 @@
+商品详情
+---
+tags:
+  - product
+parameters:
+  - name: code
+    in: query
+    default: 1
+responses:
+  200:
+    description: description
