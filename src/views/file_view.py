@@ -66,35 +66,66 @@ def get_img(path):
                 print(orign_dir)
                 print(file_dir)
                 print(wh)
-                img4 = cut_img_center(orign_dir,file_dir,wh)
+                img4 = clip_resize(orign_dir,file_dir,wh)
             else:
                 # width.png
-                img4 = scale_img_width(orign_dir, file_dir, wh)
+                img4 = thumbnail(orign_dir, file_dir, wh)
         return Response(img4, mimetype="image/jpeg")
     return jsonify(Result().fail())
 
 
-def cut_img_center(orign_dir,dest_dir,wh):
-    img = Image.open(orign_dir)
-    img4 = img.thumbnail(
-        (
-            int(wh[0]),
-            int(wh[1])
-       )
-    )
-
-    img4.save(dest_dir)
-    return img4
-
-
-def scale_img_width(orign_dir,dest_dir,wh):
+def thumbnail(orign_dir,dest_dir,wh):
     img = Image.open(orign_dir)
     width = img.size[0]
     height = img.size[1]
     scale=int(wh[0])/width
     scale_w=int(wh[0])
     scale_h=height*scale
-    print("scale %s %s" % (scale_w,scale_h))
-    img4 = img.resize((int(scale_w), int(scale_h)))
-    img4.save(dest_dir)
-    return img4
+    img.thumbnail((int(scale_w), int(scale_h)))
+    img.save(dest_dir)
+    return img
+
+
+# 裁剪压缩图片
+def clip_resize(orign_dir,dest_dir, wh):
+    '''
+        先按照一个比例对图片剪裁，然后在压缩到指定尺寸
+        一个图片 16:5 ，压缩为 2:1 并且宽为200，就要先把图片裁剪成 10:5,然后在等比压缩
+    '''
+    dst_w =float(wh[0])
+    dst_h=float(wh[1])
+    im = Image.open(orign_dir)
+    ori_w, ori_h = im.size
+
+    dst_scale = float(dst_w) / dst_h  # 目标高宽比
+    ori_scale = float(ori_w) / ori_h  # 原高宽比
+
+    if ori_scale <= dst_scale:
+        # 过高
+        width = ori_w
+        height = int(width / dst_scale)
+
+        x = 0
+        y = (ori_h - height) / 2
+
+    else:
+        # 过宽
+        height = ori_h
+        width = int(height * dst_scale)
+
+        x = (ori_w - width) / 2
+        y = 0
+
+    # 裁剪
+    box = (x, y, width + x, height + y)
+    # 这里的参数可以这么认为：从某图的(x,y)坐标开始截，截到(width+x,height+y)坐标
+    # 所包围的图像，crop方法与php中的imagecopy方法大为不一样
+    newIm = im.crop(box)
+    im = None
+
+    # 压缩
+    ratio = float(dst_w) / width
+    newWidth = int(width * ratio)
+    newHeight = int(height * ratio)
+    newIm.resize((newWidth, newHeight), Image.ANTIALIAS).save(dest_dir)
+    return newIm
