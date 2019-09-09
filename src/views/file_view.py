@@ -63,12 +63,16 @@ def get_img(path):
             wh = wh_str.split("x")
             if len(wh) > 1:
                 # widthxheight.png
+                print(orign_dir)
+                print(file_dir)
+                print(wh)
                 img4 = cut_img_center(orign_dir,file_dir,wh)
             else:
                 # width.png
                 img4 = scale_img_width(orign_dir, file_dir, wh)
         return Response(img4, mimetype="image/jpeg")
     return jsonify(Result().fail())
+
 
 def cut_img_center(orign_dir,dest_dir,wh):
     img = Image.open(orign_dir)
