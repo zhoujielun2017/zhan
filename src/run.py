@@ -11,14 +11,7 @@ from views import area_view, product_view, sell_view, ord_view, login_view, user
 import flask_excel as excel
 from views.manager import user
 
-
-def read_yaml(yaml_file_path):
-    with open(yaml_file_path, 'rb') as f:
-        cf = f.read()
-    cf = yaml.load(cf)
-
-
-app = factory.create_app(config_name='DEVELOPMENT')
+app = factory.create_app()
 
 
 Swagger(app)
