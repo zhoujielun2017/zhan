@@ -39,9 +39,16 @@ def save():
 def update():
     content = request.data
     data = json.loads(str(content, encoding="utf-8"))
-    password = str(data['password'])
-    # user = {'mobile': mobile, 'password': password}
-    # id = user_service.save(user)
+    mobile = data.get('mobile')
+    password = data.get('password')
+    if mobile:
+        return '{"code": "fail", "msg": "Invalid username/password"}'
+    if user_service.find_user(mobile, password):
+        return '{"code": "user.exists", "msg": "user exists"}'
+    save = UserSave()
+    save.mobile = mobile
+    save.password = password
+    id = user_service.save(save)
     return jsonify(Result().success())
 
 

@@ -12,9 +12,10 @@ product = Blueprint('product', __name__)
 @product.route('/<code>')
 @swag_from("yml/product_view_code.yml")
 def detail(code):
-    mobile = session.get("mobile")
     p = product_service.find_by_code(code)
-    return p
+    if p == None:
+        return jsonify(Result().fail(code="not.exists", msg="not.exists"))
+    return jsonify(Result().success(p.to_dict()))
 
 
 @product.route('/products', methods=['POST'])
@@ -26,8 +27,8 @@ def save():
     content = data.get('content')
     main_pic = data.get('main_pic')
     pics = data.get('pics')
-    if title==None or content==None:
-        return jsonify(Result().fail("param.none","param.none"))
+    if title == None or content == None:
+        return jsonify(Result().fail("param.none", "param.none"))
     save = ProductSave()
     save.title = title
     save.content = content

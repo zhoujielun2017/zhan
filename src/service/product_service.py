@@ -5,6 +5,7 @@ import datetime
 import bson
 import shortuuid
 from bson import ObjectId
+from mongoengine import DoesNotExist
 
 from model.product import Product
 from model.pagination import Pagination
@@ -30,7 +31,10 @@ def find_by_id(id: str) -> Product:
 
 
 def find_by_code(code: str) -> Product:
-    return Product.objects.get(code=code)
+    try:
+        return Product.objects.get(code=code)
+    except DoesNotExist:
+        return None
 
 
 def save(save: ProductSave) -> Product:

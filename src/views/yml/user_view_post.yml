@@ -1,5 +1,7 @@
 保存用户
 ---
+tags:
+  - user
 parameters:
   - name: body
     in: body

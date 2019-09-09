@@ -26,6 +26,7 @@ class ProductServiceTest(unittest.TestCase):
 
     def test_find_by_code(self):
         p = product_service.find_by_code("5cTJxqUoUPXmucpTPni9ZL")
+        print(p.to_dict())
         self.assertIsNotNone(p,"")
 
     def test_save(self):

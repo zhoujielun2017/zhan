@@ -4,8 +4,8 @@ tags:
   - product
 parameters:
   - name: code
-    in: query
-    default: 1
+    in: path
+    default: 5cTJxqUoUPXmucpTPni9ZL
 responses:
   200:
     description: description
