@@ -49,51 +49,48 @@ def get_img(path):
     upload = current_app.config.get("UPLOAD_IMAGE")
     datepath = datetime.datetime.fromtimestamp(int(time)).date().isoformat()
     file_dir = os.path.join(upload, datepath.replace("-", "/"), path)
-    if os.path.exists(file_dir):
-        with open(file_dir, 'rb') as f:
-            return Response(f.read(), mimetype="image/jpeg")
-    else:
+    if not os.path.exists(file_dir):
         ext = path.rsplit('.', 1)[1]
         orign_dir = os.path.join(upload, datepath.replace("-", "/"), "%s_%s.%s" % (arr[0], arr[1], ext))
         print(orign_dir)
         if len(arr) > 2:
             wh_str = arr[2].split(".")[0]
             if not wh_str in ALLOWED_WIDTH_HEIGHT:
-                return jsonify(Result().fail(code="wh.not.allow",msg="wh not allow"))
+                return jsonify(Result().fail(code="wh.not.allow", msg="wh not allow"))
             wh = wh_str.split("x")
             if len(wh) > 1:
                 # widthxheight.png
                 print(orign_dir)
                 print(file_dir)
                 print(wh)
-                img4 = clip_resize(orign_dir,file_dir,wh)
+                clip_resize(orign_dir, file_dir, wh)
             else:
                 # width.png
-                img4 = thumbnail(orign_dir, file_dir, wh)
-        return Response(img4, mimetype="image/jpeg")
-    return jsonify(Result().fail())
+                thumbnail(orign_dir, file_dir, wh)
+    with open(file_dir, 'rb') as f:
+        return Response(f.read(), mimetype="image/jpeg")
 
 
-def thumbnail(orign_dir,dest_dir,wh):
+def thumbnail(orign_dir, dest_dir, wh):
     img = Image.open(orign_dir)
     width = img.size[0]
     height = img.size[1]
-    scale=int(wh[0])/width
-    scale_w=int(wh[0])
-    scale_h=height*scale
+    scale = int(wh[0]) / width
+    scale_w = int(wh[0])
+    scale_h = height * scale
     img.thumbnail((int(scale_w), int(scale_h)))
     img.save(dest_dir)
     return img
 
 
 # 裁剪压缩图片
-def clip_resize(orign_dir,dest_dir, wh):
+def clip_resize(orign_dir, dest_dir, wh):
     '''
         先按照一个比例对图片剪裁，然后在压缩到指定尺寸
         一个图片 16:5 ，压缩为 2:1 并且宽为200，就要先把图片裁剪成 10:5,然后在等比压缩
     '''
-    dst_w =float(wh[0])
-    dst_h=float(wh[1])
+    dst_w = float(wh[0])
+    dst_h = float(wh[1])
     im = Image.open(orign_dir)
     ori_w, ori_h = im.size
 
