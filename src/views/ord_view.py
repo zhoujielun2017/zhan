@@ -29,13 +29,12 @@ def create():
 
 
 @ord.route('/ords', methods=['GET'])
-@swag_from("yml/ord_view_get.yml")
 def list():
     save = OrdSave()
-    save.pros = pros
-    save.areas = areas
-    save.name = name
-    save.mobile = mobile
-    save.address = address
+    # save.pros = pros
+    # save.areas = areas
+    # save.name = name
+    # save.mobile = mobile
+    # save.address = address
     id = ord_service.page(save)
     return jsonify(Result().success({"id": id}))
