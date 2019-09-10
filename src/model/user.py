@@ -1,6 +1,8 @@
-from mongoengine import *
-from mongoenginepagination import Document
 import datetime
+
+from mongoengine import *
+
+from mongoenginepagination import Document
 
 connect(alias='user', db='user')
 
@@ -20,7 +22,7 @@ class User(Document):
 
     def to_dict(self):
         return {
-                "id":self._id,
+            "id": str(self.id),
                 "mobile": self.mobile,
                 "status": self.status,
                 "type": self.status,

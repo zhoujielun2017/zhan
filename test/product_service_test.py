@@ -1,12 +1,11 @@
-import hashlib
 import unittest
-import uuid
 
 import shortuuid as shortuuid
 
 from model.pagination import Pagination
 from model.product_save import ProductSave
 from service import product_service
+
 
 class ProductServiceTest(unittest.TestCase):
     def test_something(self):
@@ -22,7 +21,6 @@ class ProductServiceTest(unittest.TestCase):
 
     def test_find_by_id(self):
         p = product_service.find_by_id("5d65ff35e0c4f62d92c46dc6")
-        self.assertIsNotNone(p,"")
 
     def test_find_by_code(self):
         p = product_service.find_by_code("5cTJxqUoUPXmucpTPni9ZL")

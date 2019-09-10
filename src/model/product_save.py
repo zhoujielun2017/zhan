@@ -1,5 +1,12 @@
 class ProductSave(object):
 
+    def __init__(self) -> None:
+        self._code = None
+        self._title = None
+        self._content = None
+        self._main_pic = None
+        self._pics = None
+
     @property
     def code(self):
         return self._code
@@ -23,7 +30,6 @@ class ProductSave(object):
     @content.setter
     def content(self, value):
         self._content = value
-
 
     @property
     def main_pic(self):

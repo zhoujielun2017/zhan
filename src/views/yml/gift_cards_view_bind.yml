@@ -1,19 +1,19 @@
-登录
+用户绑定礼品卡
 ---
+tags:
+  - gift_card
 parameters:
   - name: body
     in: body
     description: JSON parameters.
     schema:
       properties:
-        mobile:
+        code:
           type: string
-          description: mobile.
-          example: 123
+          example: "0120190101000001"
         password:
           type: string
-          description: password.
-          example: 123
+          example: "201920192019201922"
 responses:
   200:
     description: description

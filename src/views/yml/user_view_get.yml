@@ -1,0 +1,14 @@
+用户列表
+---
+tags:
+  - user
+parameters:
+  - name: page
+    in: query
+    default: 1
+  - name: page_size
+    in: query
+    default: 10
+responses:
+  200:
+    description: description

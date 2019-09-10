@@ -1,17 +1,41 @@
-from flask import Blueprint, render_template, request, session, json
 from flasgger import swag_from
-from service import user_service, product_service
+from flask import Blueprint, request, json, jsonify
+
+from model.ord_save import OrdSave
+from model.result import Result
+from service import ord_service
 
 ord = Blueprint('ord', __name__)
 
 
-@ord.route('/create', methods=['POST'])
+@ord.route('/ords', methods=['POST'])
+@swag_from("yml/ord_view_post.yml")
 def create():
-    mobile = session.get("mobile")
-    p_str = request.form["product"]
-    code = p_str.split("_")[0]
-    user = {'mobile': mobile}
-    print(code)
-    p = product_service.find_by_code(code)
-    return render_template("ord/create.html", user=user,product=p)
+    content = request.data
+    data = json.loads(str(content, encoding="utf-8"))
+    pros = data.get('pros')
+    areas = data.get('areas')
+    name = data.get('name')
+    mobile = data.get('mobile')
+    address = data.get('address')
+    save = OrdSave()
+    save.pros = pros
+    save.areas = areas
+    save.name = name
+    save.mobile = mobile
+    save.address = address
+    id = ord_service.save(save)
+    return jsonify(Result().success({"id": id}))
 
+
+@ord.route('/ords', methods=['GET'])
+@swag_from("yml/ord_view_get.yml")
+def list():
+    save = OrdSave()
+    save.pros = pros
+    save.areas = areas
+    save.name = name
+    save.mobile = mobile
+    save.address = address
+    id = ord_service.page(save)
+    return jsonify(Result().success({"id": id}))

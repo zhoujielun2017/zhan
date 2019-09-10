@@ -1,12 +1,11 @@
-from flask import Blueprint, render_template, request, session, json, jsonify
+import flask_excel as excel
 from flasgger import swag_from
+from flask import Blueprint, request, session, json, jsonify
 
 from model.gift_card_code import GiftCardCode
 from model.pagination import Pagination
-from model.product_save import ProductSave
 from model.result import Result
-from service import user_service, product_service, gift_card_service
-import flask_excel as excel
+from service import gift_card_service
 
 gift_card = Blueprint('gift_card', __name__)
 
@@ -40,6 +39,7 @@ def save():
     return jsonify(Result().success())
 
 
+# 礼品卡改为已用
 @gift_card.route('/gift_cards', methods=['PUT'])
 @swag_from("yml/gift_cards_view_put.yml")
 def update():
@@ -51,6 +51,19 @@ def update():
     return jsonify(Result().success())
 
 
+# 礼品卡绑定用户
+@gift_card.route('/bind', methods=['PUT'])
+@swag_from("yml/gift_cards_view_bind.yml")
+def bind():
+    content = request.data
+    data = json.loads(str(content, encoding="utf-8"))
+    code = str(data['code'])
+    password = str(data['password'])
+    user = session.get("user")
+    id = gift_card_service.update_used(code, password)
+    return jsonify(Result().success())
+
+
 @gift_card.route('/gift_cards', methods=['GET'])
 @swag_from("yml/gift_cards_view_get.yml")
 def search():
@@ -58,7 +71,7 @@ def search():
     page_size = request.args.get("page_size")
     p = Pagination(page, page_size)
     pros = gift_card_service.page(p)
-    return jsonify(Result().success(pros.to_dict))
+    return jsonify(Result().success(pros.to_dict()))
 
 
 @gift_card.route('/<id>', methods=['DELETE'])

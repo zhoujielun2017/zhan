@@ -1,14 +1,8 @@
-from typing import List, Optional
-
-import datetime
-
-import bson
 import shortuuid
-from bson import ObjectId
 from mongoengine import DoesNotExist
 
-from model.product import Product
 from model.pagination import Pagination
+from model.product import Product
 from model.product_save import ProductSave
 
 
@@ -21,13 +15,17 @@ def all():
 def page(page: Pagination):
     id = Product.objects.first().id
     total = Product.objects.count()
-    users = Product.objects.paginate_field('code', id, page.page,
-                                           page_size=page.page_size,total=total)
+    users = Product.objects.paginate_field('code', page.page,
+                                           page.page_size, total=total)
     return users
 
 
 def find_by_id(id: str) -> Product:
-    return Product.objects.get(pk=id)
+    try:
+        return Product.objects.get(pk=id)
+    except DoesNotExist:
+        print("does not exist")
+        return None
 
 
 def find_by_code(code: str) -> Product:

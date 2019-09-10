@@ -1,0 +1,37 @@
+创建订单
+---
+tags:
+  - ord
+parameters:
+  - name: body
+    in: body
+    description: JSON parameters.
+    schema:
+      properties:
+        pros:
+          type: array
+          description: [商品id_商品数量,商品id_商品数量]
+          example: [abcdef_3,abcdfd_1]
+        form:
+          type: string
+          description: 表单id,目前任意填写
+          example: abcdefg
+        areas:
+          type: array
+          description: area1的id_area1的名称
+          example: [010_北京,01011_海淀区]
+        name:
+          type: string
+          description: 收货名
+          example: xxx
+        mobile:
+          type: string
+          description: 收货电话
+          example: 18555555555
+        address:
+          type: string
+          description: 收货地址
+          example: xianggggggggggggg
+responses:
+  200:
+    description: description

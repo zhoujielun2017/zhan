@@ -1,7 +1,7 @@
-更新用户
+登录
 ---
 tags:
-  - user
+  - login
 parameters:
   - name: body
     in: body

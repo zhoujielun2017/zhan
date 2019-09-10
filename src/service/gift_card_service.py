@@ -1,18 +1,10 @@
 import random
-from typing import List, Optional
 
-import datetime
-
-import bson
-import shortuuid
-from bson import ObjectId
 from mongoengine import DoesNotExist
 
 from model.gift_card import GiftCard
-
 from model.gift_card_code import GiftCardCode
 from model.pagination import Pagination
-from model.product_save import ProductSave
 
 
 def all():
@@ -24,8 +16,8 @@ def all():
 def page(page: Pagination):
     id = GiftCard.objects.first().id
     total = GiftCard.objects.count()
-    users = GiftCard.objects.paginate_field('code', id, page.page,
-                                            page_size=page.page_size,total=total)
+    users = GiftCard.objects.paginate_field('code', page.page,
+                                            page.page_size, total=total)
     return users
 
 
@@ -63,4 +55,12 @@ def update_used(code: str, password: str) -> GiftCard:
     p = find_by_code(code)
     if p.password == password:
         p.update(status=2)
+    return p
+
+
+# 已使用
+def update_bind_user(code: str, password: str, user_id: str) -> GiftCard:
+    p = find_by_code(code)
+    if p.password == password:
+        p.update(user_id=user_id)
     return p

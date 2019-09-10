@@ -1,6 +1,4 @@
-from flask import Blueprint,render_template,request
-
-from service.user_service import find_user
+from flask import Blueprint, render_template
 
 muser = Blueprint('muser', __name__)
 

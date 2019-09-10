@@ -1,5 +1,7 @@
 退出
 ---
+tags:
+  - login
 responses:
   200:
     description: description

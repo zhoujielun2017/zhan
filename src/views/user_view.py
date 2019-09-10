@@ -1,6 +1,7 @@
 from flasgger import swag_from
-from flask import Blueprint, render_template, request, session, json, jsonify
+from flask import Blueprint, request, session, json, jsonify
 
+from model.pagination import Pagination
 from model.result import Result
 from model.user_save import UserSave
 from service import user_service
@@ -41,21 +42,25 @@ def update():
     data = json.loads(str(content, encoding="utf-8"))
     mobile = data.get('mobile')
     password = data.get('password')
-    if mobile:
+    if not mobile:
         return '{"code": "fail", "msg": "Invalid username/password"}'
-    if user_service.find_user(mobile, password):
+    if not user_service.find_by_mobile(mobile):
         return '{"code": "user.exists", "msg": "user exists"}'
     save = UserSave()
     save.mobile = mobile
     save.password = password
-    id = user_service.save(save)
+    id = user_service.update(save)
     return jsonify(Result().success())
 
 
 @user.route('/users', methods=['GET'])
+@swag_from("yml/user_view_get.yml")
 def search():
-    id = user_service.page(user)
-    return '{"code": "success","data":"%s"}' % id
+    page = request.args.get("page")
+    page_size = request.args.get("page_size")
+    p = Pagination(page, page_size)
+    id = user_service.page(p)
+    return jsonify(Result().success(id.to_dict()))
 
 
 @user.route('/<id>', methods=['DELETE'])

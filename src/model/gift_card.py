@@ -1,12 +1,13 @@
 import datetime
 
 from mongoengine import *
+
 from mongoenginepagination import Document
 
 connect(alias='gift_card', db='gift_card')
 
 class GiftCard(Document):
-
+    user_id = StringField()
     code = StringField()
     password = StringField()
     # 1有效 -1过期 2已使用
@@ -18,7 +19,7 @@ class GiftCard(Document):
 
     def to_dict(self):
         return {
-                "id":self._id,
+            "id": str(self.id),
                 "code": self.code,
                 "password": self.password,
                 "status": self.status,

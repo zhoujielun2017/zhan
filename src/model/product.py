@@ -1,6 +1,8 @@
-from mongoengine import *
-from mongoenginepagination import Document
 import datetime
+
+from mongoengine import *
+
+from mongoenginepagination import Document
 
 connect(alias='product', db='product')
 
@@ -27,6 +29,7 @@ class Product(Document):
 
     def to_dict(self):
         return {
+            "id": str(self.id),
                 "code": self.code,
                 "content": self.content,
                 "main_pic": self.main_pic,

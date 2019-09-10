@@ -2,9 +2,7 @@
 import math
 
 import mongoengine
-
-from mongoengine.queryset import MultipleObjectsReturned, DoesNotExist, QuerySet
-from mongoengine import ValidationError
+from mongoengine.queryset import QuerySet
 
 
 class MongoEnginePaginationException(Exception):
@@ -19,13 +17,9 @@ class BaseQuerySet(QuerySet):
     def paginate(self, page, page_size, error_out=True):
         return Pagination(self, page, page_size)
 
-    def paginate_field(self, field_name, doc_id, page, page_size,
+    def paginate_field(self, field_name, page, page_size,
                        total=None):
-        item = self.get(id=doc_id)
-        if total!=None:
-            count = getattr(item, field_name + "_count", '')
-        total = total or count or len(getattr(item, field_name))
-        return ListFieldPagination(self, field_name, doc_id, page, page_size,
+        return ListFieldPagination(self, field_name, page, page_size,
                                    total=total)
 
 
@@ -143,7 +137,7 @@ class Pagination(object):
 
 class ListFieldPagination(Pagination):
 
-    def __init__(self, queryset, field_name, doc_id, page, page_size,
+    def __init__(self, queryset, field_name, page, page_size,
                  total=None):
         """Allows an array within a document to be paginated.
 
@@ -161,7 +155,6 @@ class ListFieldPagination(Pagination):
         self.page_size = page_size
 
         self.queryset = queryset
-        self.doc_id = doc_id
         self.field_name = field_name
 
         start_index = (page - 1) * page_size

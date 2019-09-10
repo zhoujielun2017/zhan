@@ -1,14 +1,16 @@
-from mongoengine import *
-from mongoenginepagination import Document
 import datetime
+
+from mongoengine import *
+
+from mongoenginepagination import Document
 
 connect(alias='ord', db='ord')
 
 
 class Ord(Document):
-    userid = StringField()
+    user_id = StringField()
     create_time = DateTimeField(default=datetime.datetime.utcnow)
-
+    update_time = DateTimeField(default=datetime.datetime.utcnow)
     meta = {'db_alias': 'ord'}
 
 
