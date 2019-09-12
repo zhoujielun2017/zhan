@@ -92,16 +92,22 @@ class ListFieldPagination(Pagination):
         self.queryset = queryset
         if len(self.queryset) == 0:
             self.total = 0
+            print("query set is None")
+            return
+        self.total = len(self.queryset)
+        start_index = (page - 1) * page_size
+        if start_index > self.total:
+            print("start index greater than total")
             return
         for key, value in list(kwargs.items()):
             if not value:
                 kwargs = kwargs.pop(key)
         if not kwargs:
-            self.items = self.queryset()
+            self.items = self.queryset[start_index:page_size]
         else:
-            self.items = self.queryset(**kwargs)
+            self.items = self.queryset(**kwargs)[start_index: page_size]
 
-        self.total = len(self.items)
+
 
         if not self.items and page != 1:
             raise MongoEnginePaginationException()

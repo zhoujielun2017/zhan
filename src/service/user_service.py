@@ -28,7 +28,7 @@ def page(page: Pagination, **kwargs):
 
 
 def page2(page: Pagination):
-    users = User.objects(mobile__contains="123688773")
+    users = User.objects[3:6]
     return users
 
 def find_by_mobile(mobile: str) -> User:

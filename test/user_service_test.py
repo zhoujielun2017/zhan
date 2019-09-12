@@ -29,3 +29,9 @@ class ProductServiceTest(unittest.TestCase):
         p = Pagination(1, 10)
         user = user_service.page(p, mobile__contains="")
         print(user.to_dict())
+
+    def test_page2(self):
+        p = Pagination(1, 10)
+        users = user_service.page2(p)
+        for user in users:
+            print(user.to_dict())

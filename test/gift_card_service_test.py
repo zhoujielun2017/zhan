@@ -46,4 +46,5 @@ class GiftCardServiceTest(unittest.TestCase):
     def test_page(self):
         r = Pagination(1, 10)
         pros = gift_card_service.page(r)
+        # self.assertEqual(pros.)
         print(pros.to_dict())
