@@ -44,7 +44,7 @@ class GiftCardServiceTest(unittest.TestCase):
         gift_card_service.update_used("0120190101000011", "766326562130472281")
 
     def test_page(self):
-        r = Pagination(1, 10)
+        r = Pagination(2, 10)
         pros = gift_card_service.page(r)
         # self.assertEqual(pros.)
         print(pros.to_dict())

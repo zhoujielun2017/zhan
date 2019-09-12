@@ -103,9 +103,9 @@ class ListFieldPagination(Pagination):
             if not value:
                 kwargs = kwargs.pop(key)
         if not kwargs:
-            self.items = self.queryset[start_index:page_size]
+            self.items = self.queryset[start_index:start_index + page_size]
         else:
-            self.items = self.queryset(**kwargs)[start_index: page_size]
+            self.items = self.queryset(**kwargs)[start_index: start_index + page_size]
 
 
 
