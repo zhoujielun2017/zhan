@@ -8,7 +8,7 @@ class ProductServiceTest(unittest.TestCase):
 
     def test_save(self):
         save = OrdSave()
-        save.pros = ["test_1", "test2_2"]
+        save.pros = [{"id": "sdfsf", "num": 1, "title": "test_tile"}]
         save.areas = ["test_1", "test2_2"]
         save.mobile = "test_123123"
         save.name = "test_123123"

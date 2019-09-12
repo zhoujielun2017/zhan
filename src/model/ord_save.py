@@ -3,7 +3,7 @@ class OrdSave(object):
     def __init__(self) -> None:
         self._ord_id = None
         self._user_id = None
-        # productid_num
+        # productid_num [{id:id,num:num,title:title}]
         self._pros = []
         self._areas = []
         # 收货人
@@ -12,6 +12,9 @@ class OrdSave(object):
         self._mobile = None
         # 收货地址
         self._address = None
+
+    def addProduct(self, product_dict):
+        self._pros.append(product_dict)
 
     @property
     def ord_id(self):

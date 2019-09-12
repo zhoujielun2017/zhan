@@ -1,7 +1,7 @@
-用户列表
+用户的订单列表
 ---
 tags:
-  - user
+  - ord
 parameters:
   - name: page
     in: query
@@ -9,9 +9,6 @@ parameters:
   - name: page_size
     in: query
     default: 10
-  - name: mobile
-      in: query
-      default: 155566
 responses:
   200:
     description: description

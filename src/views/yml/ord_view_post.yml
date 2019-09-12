@@ -11,15 +11,15 @@ parameters:
         pros:
           type: array
           description: [商品id_商品数量,商品id_商品数量]
-          example: [abcdef_3,abcdfd_1]
+          example: [5d776210a3f498aff74ae487_3,5d770a73570a8f8921f322cc_1]
         form:
           type: string
           description: 表单id,目前任意填写
           example: abcdefg
         areas:
           type: array
-          description: area1的id_area1的名称
-          example: [010_北京,01011_海淀区]
+          description: area1的id_area1的名称,一共三级
+          example: [010_北京,01011_海淀区,02112_中山路]
         name:
           type: string
           description: 收货名

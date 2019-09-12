@@ -14,7 +14,7 @@ class UserSave(object):
 
     @mobile.setter
     def mobile(self, value):
-        self._mobile = value
+        self._mobile = str(value)
 
     @property
     def password(self):
@@ -22,5 +22,4 @@ class UserSave(object):
 
     @password.setter
     def password(self, value):
-        self._password = value
-
+        self._password = str(value)

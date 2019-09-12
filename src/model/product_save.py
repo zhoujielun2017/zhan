@@ -1,4 +1,6 @@
 class ProductSave(object):
+    id = None
+    price = None
 
     def __init__(self) -> None:
         self._code = None
@@ -46,3 +48,15 @@ class ProductSave(object):
     @pics.setter
     def pics(self, value):
         self._pics = value
+
+    def to_update(self):
+        dd = {
+            "title": self.title,
+            "content": self.content,
+            "price": self.price,
+            "main_pic": self.main_pic,
+            "pics": self.pics}
+        for k, v in list(dd.items()):
+            if not v:
+                dd.pop(k)
+        return dd

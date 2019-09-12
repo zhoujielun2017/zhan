@@ -1,18 +1,17 @@
+import re
 from datetime import timedelta
 
-import yaml
-from flask import Flask
+import flask_excel as excel
 from flasgger import Swagger
+from flask import jsonify, session, request, current_app
 from flask_cors import CORS
-import os
 
 import factory
+from model.result import Result
 from views import area_view, product_view, sell_view, ord_view, login_view, user_view, gift_card_view, file_view
-import flask_excel as excel
 from views.manager import user
 
 app = factory.create_app()
-
 
 Swagger(app)
 excel.init_excel(app)
@@ -30,6 +29,23 @@ app.register_blueprint(login_view.login, url_prefix='/login')
 app.register_blueprint(product_view.product, url_prefix='/product')
 app.register_blueprint(ord_view.ord, url_prefix='/ord')
 
+ALLOW_PATH = ["/login/in", "/login/reg", "/login/reg", "/area/areas"]
+
+
+@app.before_request
+def before_user():
+    check_login = current_app.config.get("CHECK_LOGIN")
+    if check_login:
+        return
+    path = request.path
+    for allow in ALLOW_PATH:
+        if re.match(allow, path):
+            return
+    else:
+        if not 'user_id' in session:
+            return jsonify(Result().fail(code="user.not.login", msg="user not login"))
+
+
 @app.after_request
 def af_request(resp):
     """
@@ -43,4 +59,4 @@ def af_request(resp):
     return resp
 
 
-app.run(debug = True)
+app.run(debug=True)

@@ -25,7 +25,7 @@ def save():
         return jsonify(Result().fail(code="param.null", msg="Invalid param"))
     if len(area) != 2 or len(year) != 4 or len(unit) != 2 or len(print) != 2:
         return jsonify(Result().fail(code="param.length", msg="param length error"))
-    if num_end-num_start > 1000:
+    if num_end - num_start > 1000:
         return jsonify(Result().fail(code="param.range", msg="end - start over 1000"))
     for num in range(int(num_start), int(num_end)):
         code = GiftCardCode()
@@ -47,7 +47,7 @@ def update():
     data = json.loads(str(content, encoding="utf-8"))
     code = str(data['code'])
     password = str(data['password'])
-    id = gift_card_service.update_used(code,password)
+    id = gift_card_service.update_used(code, password)
     return jsonify(Result().success())
 
 
@@ -59,8 +59,8 @@ def bind():
     data = json.loads(str(content, encoding="utf-8"))
     code = str(data['code'])
     password = str(data['password'])
-    user = session.get("user")
-    id = gift_card_service.update_used(code, password)
+    user_id = session.get("user_id")
+    id = gift_card_service.update_bind_user(code, password, user_id)
     return jsonify(Result().success())
 
 
@@ -90,4 +90,3 @@ def export():
     pros = gift_card_service.page(p)
     column_names = ['code', 'password']
     return excel.make_response_from_query_sets(pros.queryset, column_names, "xls")
-

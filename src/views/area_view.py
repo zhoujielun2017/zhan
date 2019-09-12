@@ -1,12 +1,12 @@
 from flasgger import swag_from
-from flask import Blueprint
+from flask import Blueprint, Response
+
 import service.division_service as division_service
 
 area = Blueprint('area', __name__)
 
 
 @area.route('/areas', methods=['GET'])
-@swag_from("area.yml")
+@swag_from("yml/area.yml")
 def index():
-    return division_service.read()
-
+    return Response(division_service.read(), content_type='application/json')

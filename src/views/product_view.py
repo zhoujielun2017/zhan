@@ -1,10 +1,10 @@
-from flask import Blueprint, render_template, request, session, json, jsonify
 from flasgger import swag_from
+from flask import Blueprint, request, json, jsonify
 
 from model.pagination import Pagination
 from model.product_save import ProductSave
 from model.result import Result
-from service import user_service, product_service
+from service import product_service
 
 product = Blueprint('product', __name__)
 
@@ -26,12 +26,14 @@ def save():
     title = data.get('title')
     content = data.get('content')
     main_pic = data.get('main_pic')
+    price = data.get('price')
     pics = data.get('pics')
     if title == None or content == None:
         return jsonify(Result().fail("param.none", "param.none"))
     save = ProductSave()
     save.title = title
     save.content = content
+    save.price = price
     save.main_pic = main_pic
     save.pics = pics
     id = product_service.save(save)
@@ -39,14 +41,27 @@ def save():
 
 
 @product.route('/products', methods=['PUT'])
+@swag_from("yml/product_view_update.yml")
 def update():
     content = request.data
     data = json.loads(str(content, encoding="utf-8"))
-    mobile = str(data['mobile'])
-    password = str(data['password'])
-    product = {'mobile': mobile, 'password': password}
-    id = product_service.save(product)
-    return '{"code": "success","data":"%s"}' % id
+    id = data.get('id')
+    title = data.get('title')
+    content = data.get('content')
+    main_pic = data.get('main_pic')
+    price = data.get('price')
+    pics = data.get('pics')
+    if title == None or content == None:
+        return jsonify(Result().fail("param.none", "param.none"))
+    save = ProductSave()
+    save.id = id
+    save.title = title
+    save.content = content
+    save.price = price
+    save.main_pic = main_pic
+    save.pics = pics
+    id = product_service.update(save)
+    return jsonify(Result().success())
 
 
 @product.route('/products', methods=['GET'])

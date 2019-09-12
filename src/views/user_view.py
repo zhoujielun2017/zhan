@@ -24,15 +24,15 @@ def save():
     data = json.loads(str(content, encoding="utf-8"))
     mobile = data.get('mobile')
     password = data.get('password')
-    if mobile or password:
+    if not mobile or not password:
         return '{"code": "fail", "msg": "Invalid username/password"}'
-    if user_service.find_user(mobile, password):
-        return '{"code": "user.exists", "msg": "user exists"}'
+    if user_service.find_by_user(mobile, password):
+        return jsonify(Result().fail(code="user.exists", msg="user exists"))
     save = UserSave()
     save.mobile = mobile
     save.password = password
     id = user_service.save(save)
-    return jsonify(Result().success())
+    return jsonify(Result().success({"id": id}))
 
 
 @user.route('/users', methods=['PUT'])
@@ -43,7 +43,7 @@ def update():
     mobile = data.get('mobile')
     password = data.get('password')
     if not mobile:
-        return '{"code": "fail", "msg": "Invalid username/password"}'
+        return '{"code": "param.null", "msg": "Invalid username/password"}'
     if not user_service.find_by_mobile(mobile):
         return '{"code": "user.exists", "msg": "user exists"}'
     save = UserSave()
@@ -58,7 +58,8 @@ def update():
 def search():
     page = request.args.get("page")
     page_size = request.args.get("page_size")
-    p = Pagination(page, page_size)
+    mobile = request.args.get("mobile")
+    p = Pagination(page, page_size, mobile__contains=mobile)
     id = user_service.page(p)
     return jsonify(Result().success(id.to_dict()))
 

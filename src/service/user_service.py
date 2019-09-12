@@ -22,13 +22,14 @@ def find_by_id(id: str):
         return None
 
 
-def page(page: Pagination):
-    id = User.objects.first().id
-    total = User.objects.count()
-    users = User.objects.paginate_field('mobile', page.page,
-                                        page.page_size, total=total)
+def page(page: Pagination, **kwargs):
+    users = User.objects.paginate_field(page.page, page.page_size, **kwargs)
     return users
 
+
+def page2(page: Pagination):
+    users = User.objects(mobile__contains="123688773")
+    return users
 
 def find_by_mobile(mobile: str) -> User:
     user = User.objects(mobile=str(mobile)).first()

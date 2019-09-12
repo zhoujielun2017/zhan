@@ -11,11 +11,11 @@ class Ord(Document):
     user_id = StringField()
     create_time = DateTimeField(default=datetime.datetime.utcnow)
     update_time = DateTimeField(default=datetime.datetime.utcnow)
-    meta = {'db_alias': 'ord'}
+    meta = {'strict': False, 'db_alias': 'ord'}
 
-
-if __name__ == '__main__':
-    ord = Ord()
-    print(dir(ord))
-    print(type(ord))
-    print(ord.__dict__)
+    def to_dict(self):
+        return {
+            "id": str(self.id),
+            "user_id": self.user_id,
+            "create_time": self.create_time.strftime('%Y-%m-%d %H:%M:%S'),
+            "update_time": self.update_time.strftime('%Y-%m-%d %H:%M:%S')}

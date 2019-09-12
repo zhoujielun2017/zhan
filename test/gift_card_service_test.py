@@ -1,5 +1,4 @@
 import random
-import random
 import sys
 import unittest
 
@@ -47,5 +46,4 @@ class GiftCardServiceTest(unittest.TestCase):
     def test_page(self):
         r = Pagination(1, 10)
         pros = gift_card_service.page(r)
-        for item in pros.queryset:
-            print(item.code)
+        print(pros.to_dict())

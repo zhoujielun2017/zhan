@@ -13,6 +13,7 @@ class Product(Document):
     title = StringField()
     # 内容
     content = StringField()
+    price = IntField()
     # 主图
     main_pic = StringField()
 
@@ -32,18 +33,10 @@ class Product(Document):
             "id": str(self.id),
                 "code": self.code,
                 "content": self.content,
+            "price": self.price,
                 "main_pic": self.main_pic,
                 "pics": self.pics,
                 "create_time": self.create_time.strftime( '%Y-%m-%d %H:%M:%S'),
                 "update_time": self.update_time.strftime( '%Y-%m-%d %H:%M:%S')}
 
 
-if __name__ == '__main__':
-    start = datetime.datetime.now()
-    print(start)
-    ord = Product()
-    print(dir(ord))
-    print(type(ord))
-    print(ord.__dict__)
-    end = datetime.datetime.now()
-    print(end-start)
