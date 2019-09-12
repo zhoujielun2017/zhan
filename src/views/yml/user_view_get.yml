@@ -10,8 +10,8 @@ parameters:
     in: query
     default: 10
   - name: mobile
-      in: query
-      default: 155566
+    in: query
+    default: 155566
 responses:
   200:
     description: description
