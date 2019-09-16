@@ -36,5 +36,7 @@ class Result(object):
 
     def fail(self, **kwargs):
         if kwargs:
+            if not kwargs.get("msg"):
+                return {"code": kwargs.get("code")}
             return {"code": kwargs.get("code"), "msg": kwargs.get("msg")}
         return {"code": "fail"}

@@ -1,4 +1,4 @@
-用户绑定礼品卡(有更新09-16)
+商品绑定礼品卡
 ---
 tags:
   - gift_card
@@ -8,14 +8,14 @@ parameters:
     description: JSON parameters.
     schema:
       properties:
-        code:
+        product_id:
           type: string
+          description: 商品id
+          example: "5d79e24f8657d605aed14bf2"
+        codes:
+          type: array
           description: 礼品卡号码
-          example: "0120190101000001"
-        password:
-          type: string
-          description: 礼品卡密码
-          example: "201920192019201922"
+          example: ["0120190101000001","0120190101000002","0120190101000003"]
 responses:
   200:
     description: description

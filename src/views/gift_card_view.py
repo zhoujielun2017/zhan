@@ -5,7 +5,7 @@ from flask import Blueprint, request, session, json, jsonify
 from model.gift_card_code import GiftCardCode
 from model.pagination import Pagination
 from model.result import Result
-from service import gift_card_service
+from service import gift_card_service, product_service
 
 gift_card = Blueprint('gift_card', __name__)
 
@@ -52,15 +52,30 @@ def update():
 
 
 # 礼品卡绑定用户
-@gift_card.route('/bind', methods=['PUT'])
+@gift_card.route('/user', methods=['PUT'])
 @swag_from("yml/gift_cards_view_bind.yml")
-def bind():
+def bind_user():
     content = request.data
     data = json.loads(str(content, encoding="utf-8"))
     code = str(data['code'])
     password = str(data['password'])
     user_id = session.get("user_id")
     id = gift_card_service.update_bind_user(code, password, user_id)
+    return jsonify(Result().success())
+
+
+# 礼品卡绑定商品
+@gift_card.route('/product', methods=['PUT'])
+@swag_from("yml/gift_cards_view_product.yml")
+def bind_product():
+    content = request.data
+    data = json.loads(str(content, encoding="utf-8"))
+    product_id = str(data['product_id'])
+    codes = data['codes']
+    p = product_service.find_by_id(product_id)
+    if not p:
+        return jsonify(Result().fail(code="product.not.found"))
+    gift_card_service.update_bind_product(codes, product_id)
     return jsonify(Result().success())
 
 

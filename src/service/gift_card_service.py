@@ -55,9 +55,16 @@ def update_used(code: str, password: str) -> GiftCard:
     return p
 
 
-# 已使用
+# 绑定用印
 def update_bind_user(code: str, password: str, user_id: str) -> GiftCard:
     p = find_by_code(code)
     if p.password == password:
         p.update(user_id=user_id)
     return p
+
+
+# 绑定商品
+def update_bind_product(codes, product_id: str) -> GiftCard:
+    for code in codes:
+        p = find_by_code(code)
+        p.update(product_id=product_id)

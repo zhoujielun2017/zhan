@@ -32,6 +32,7 @@ class Product(Document):
         return {
             "id": str(self.id),
                 "code": self.code,
+            "title": self.title,
                 "content": self.content,
             "price": self.price,
                 "main_pic": self.main_pic,

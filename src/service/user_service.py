@@ -1,6 +1,6 @@
 import datetime
 
-from mongoengine import DoesNotExist
+from mongoengine import DoesNotExist, ValidationError
 
 from model.pagination import Pagination
 from model.user import User
@@ -19,6 +19,9 @@ def find_by_id(id: str):
     try:
         return User.objects.get(pk=id)
     except DoesNotExist:
+        return None
+    except ValidationError:
+        print("id length is wrong")
         return None
 
 
