@@ -29,8 +29,6 @@ app.register_blueprint(login_view.login, url_prefix='/login')
 app.register_blueprint(product_view.product, url_prefix='/product')
 app.register_blueprint(ord_view.ord, url_prefix='/ord')
 
-ALLOW_PATH = ["/login/in", "/login/reg", "/login/reg", "/area/areas"]
-
 
 @app.before_request
 def before_user():
@@ -38,7 +36,8 @@ def before_user():
     if check_login:
         return
     path = request.path
-    for allow in ALLOW_PATH:
+    allow_path = current_app.config.get("ALLOW_NOT_LOGIN")
+    for allow in allow_path:
         if re.match(allow, path):
             return
     else:
