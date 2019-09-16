@@ -1,5 +1,6 @@
 from model.ord import Ord
 from model.ord_area import OrdArea
+from model.ord_gift_card import OrdGiftCard
 from model.ord_product import OrdProduct
 from model.ord_save import OrdSave
 
@@ -12,6 +13,7 @@ def save(dto: OrdSave):
     ord = Ord()
     ord.save()
     ord.user_id = dto.user_id
+    # 商品
     for pro in dto.pros:
         ord_pro = OrdProduct()
         ord_pro.ord_id = str(ord.id)
@@ -19,6 +21,7 @@ def save(dto: OrdSave):
         ord_pro.num = pro.get("num")
         ord_pro.title = pro.get("title")
         ord_pro.save()
+    # 收货地址
     ord_area = OrdArea()
     ord_area.ord_id = str(ord.id)
     if len(dto.areas) > 0:
@@ -31,4 +34,10 @@ def save(dto: OrdSave):
         ord_area.area3_id = dto.areas[2].split("_")[0]
         ord_area.area3_name = dto.areas[2].split("_")[1]
     ord_area.save()
+    # 礼品卡
+    gift = OrdGiftCard()
+    gift.gift_card_code = dto.gift_card_code
+    gift.gift_card_id = dto.gift_card_id
+    gift.ord_id = str(ord.id)
+    gift.save()
     return str(ord.id)

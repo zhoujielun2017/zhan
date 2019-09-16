@@ -1,0 +1,37 @@
+根据礼品卡创建订单
+---
+tags:
+  - ord
+parameters:
+  - name: body
+    in: body
+    description: JSON parameters.
+    schema:
+      properties:
+        code:
+          type: string
+          description: 礼品卡号码
+          example: 0120190101000001
+        password:
+          type: string
+          description: 礼品卡密码
+          example: "876543119454209570"
+        areas:
+          type: array
+          description: area1的id_area1的名称,一共三级
+          example: [010_北京,01011_海淀区,02112_中山路]
+        name:
+          type: string
+          description: 收货名
+          example: xxx
+        mobile:
+          type: string
+          description: 收货电话
+          example: 18555555555
+        address:
+          type: string
+          description: 收货地址
+          example: xianggggggggggggg
+responses:
+  200:
+    description: description
