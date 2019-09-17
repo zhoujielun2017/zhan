@@ -1,0 +1,11 @@
+礼品卡根据code查询
+---
+tags:
+  - gift_card
+parameters:
+  - name: code
+    in: path
+    default: 0120190101000001
+responses:
+  200:
+    description: description

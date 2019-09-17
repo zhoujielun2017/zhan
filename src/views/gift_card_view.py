@@ -89,6 +89,18 @@ def search():
     return jsonify(Result().success(pros.to_dict()))
 
 
+@gift_card.route('/<code>', methods=['GET'])
+@swag_from("yml/gift_cards_view_code.yml")
+def find_by_code(code):
+    gift = gift_card_service.find_by_code(code)
+    if not gift:
+        return jsonify(Result().fail(code="gift_card.not.found"))
+    pro = product_service.find_by_id(gift.product_id)
+    if not pro:
+        return jsonify(Result().fail(code="product.not.bind"))
+    return jsonify(Result().success({"gift_card": gift.to_dict(), "product": pro.to_dict()}))
+
+
 @gift_card.route('/<id>', methods=['DELETE'])
 @swag_from("yml/gift_cards_view_delete.yml")
 def delete(id):

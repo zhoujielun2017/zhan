@@ -54,17 +54,16 @@ def create_gift_card():
     if not gift:
         return jsonify(Result().fail(code="gift.not.found"))
     if password != gift.password:
-        return jsonify(Result().fail(code="password.error"))
+        return jsonify(Result().fail(code="gift.password.error"))
     if not gift.product_id:
-        return jsonify(Result().fail(code="gift.product.relation"))
+        return jsonify(Result().fail(code="gift.product.relation", msg="gift card not bind to the product"))
     if gift.status != 1:
-        return jsonify(Result().fail(code="gift.card.used"))
+        return jsonify(Result().fail(code="gift.card.expire", msg="gift card expire or used"))
     gift_card_service.update_used(code, password)
 
     save.gift_card_id = str(gift.id)
     save.gift_card_code = gift.code
     product = product_service.find_by_id(gift.product_id)
-
     if not product:
         return jsonify(Result().fail(code="product.not.exist", msg="product not exist"))
     save.addProduct({"id": str(product.id), "num": 1, "title": product.title})
