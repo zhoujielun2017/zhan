@@ -9,3 +9,9 @@ parameters:
 responses:
   200:
     description: description
+    schema:
+      properties:
+        status:
+          type: string
+          description:  1有效 -1过期 2已使用
+          default: 1
