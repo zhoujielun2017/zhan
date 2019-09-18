@@ -107,8 +107,6 @@ class ListFieldPagination(Pagination):
         else:
             self.items = self.queryset(**kwargs)[start_index: start_index + page_size]
 
-
-
         if not self.items and page != 1:
             raise MongoEnginePaginationException()
 

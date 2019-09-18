@@ -27,7 +27,7 @@ class ProductServiceTest(unittest.TestCase):
 
     def test_page_contains(self):
         p = Pagination(1, 10)
-        user = user_service.page(p, mobile__contains="")
+        user = user_service.page(p, mobile__contains="123456")
         print(user.to_dict())
 
     def test_page2(self):

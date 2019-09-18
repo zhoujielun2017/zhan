@@ -1,3 +1,4 @@
+import hashlib
 import unittest
 
 from mongoengine import connect, disconnect, Document, StringField
@@ -23,3 +24,10 @@ class TestPerson(unittest.TestCase):
 
         fresh_pers = Person.objects().first()
         self.assertEqual(fresh_pers.name, 'John')
+
+    def test_md5(self):
+        m = hashlib.md5()
+        # m.update(b'zxcvzxcv163.com')
+        # print(m.hexdigest())
+        m.update(b'zxcvzxcvgithub.com')
+        print(m.hexdigest())

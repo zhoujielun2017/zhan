@@ -59,8 +59,8 @@ def search():
     page = request.args.get("page")
     page_size = request.args.get("page_size")
     mobile = request.args.get("mobile")
-    p = Pagination(page, page_size, mobile__contains=mobile)
-    id = user_service.page(p)
+    p = Pagination(page, page_size)
+    id = user_service.page(p, mobile__contains=mobile)
     return jsonify(Result().success(id.to_dict()))
 
 
