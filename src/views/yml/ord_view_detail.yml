@@ -1,14 +1,11 @@
-用户的订单列表
+订单详情
 ---
 tags:
   - ord
 parameters:
-  - name: page
-    in: query
-    default: 1
-  - name: page_size
-    in: query
-    default: 10
+  - name: id
+    in: path
+    default: 5d7f604da64db20db7306ab2
 responses:
   200:
     description: description

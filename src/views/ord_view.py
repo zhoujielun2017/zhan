@@ -84,12 +84,20 @@ def page():
     page_size = request.args.get("page_size")
     p = Pagination(page, page_size)
     id = ord_service.page(p)
-    return jsonify(Result().success(id.to_dict()))
+    return jsonify(Result().success(id))
 
 
 @ord.route('/<id>', methods=['GET'])
 @swag_from("yml/ord_view_detail.yml")
 def detail(id):
-    session.get("user_id")
-    ord = ord_service.find_by_id(id)
-    return jsonify(Result().success(ord))
+    user_id = session.get("user_id")
+    detail = ord_service.find_by_id(id)
+    if not detail or not detail.get("ord"):
+        return jsonify(Result().fail(code="ord.not.exist"))
+    if not detail.get("ord").user_id or user_id != detail.get("ord").user_id:
+        return jsonify(Result().fail(code="ord.not.exist", msg="ord is not yours"))
+    ps = list(map(lambda item: item.to_dict(), list(detail.get("products"))))
+    return jsonify(Result().success({"ord": detail.get("ord").to_dict(), "products": ps,
+                                     "area": None if not detail.get("area") else detail.get("area").to_dict(),
+                                     "gift_card": None if not detail.get("gift_card") else detail.get(
+                                         "gift_card").to_dict()}))
