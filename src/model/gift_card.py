@@ -28,5 +28,5 @@ class GiftCard(Document):
             "user_id": self.user_id,
             "product_id": self.product_id,
             "create_time": self.create_time.strftime('%Y-%m-%d %H:%M:%S'),
-            "expire_time": None if self.expire_time == None else self.expire_time.strftime('%Y-%m-%d %H:%M:%S'),
+            "expire_time": None if not self.expire_time else self.expire_time.strftime('%Y-%m-%d %H:%M:%S'),
             "update_time": self.update_time.strftime('%Y-%m-%d %H:%M:%S')}

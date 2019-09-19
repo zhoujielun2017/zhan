@@ -91,6 +91,7 @@ class ListFieldPagination(Pagination):
         self.page_size = page_size
 
         self.queryset = queryset
+        self.items = []
         if len(self.queryset) == 0:
             self.total = 0
             print("query set is None")

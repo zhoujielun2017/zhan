@@ -10,7 +10,7 @@ parameters:
       properties:
         id:
           type: string
-          example: 1000xxx
+          example: 5d8317f015b45aa1490b4fc5
         area1_id:
           type: string
           example: 1000

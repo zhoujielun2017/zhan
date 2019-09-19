@@ -11,7 +11,7 @@ parameters:
         mobile:
           type: string
           description: mobile.
-          example: 123
+          example: 18577778888
         password:
           type: string
           description: password.

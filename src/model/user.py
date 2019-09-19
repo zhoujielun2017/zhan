@@ -12,8 +12,10 @@ class User(Document):
     name = StringField()
     mobile = StringField(unique=True)
     password = StringField()
-    status = IntField()
-    type = IntField()
+    # 1 有效
+    status = IntField(default=1)
+    # 1 普通用户
+    type = IntField(default=1)
     login_time = DateTimeField()
     create_time = DateTimeField(default=datetime.datetime.utcnow)
     update_time = DateTimeField(default=datetime.datetime.utcnow)
@@ -23,8 +25,8 @@ class User(Document):
     def to_dict(self):
         return {
             "id": str(self.id),
-                "mobile": self.mobile,
-                "status": self.status,
-                "type": self.status,
-                "create_time": self.create_time.strftime( '%Y-%m-%d %H:%M:%S'),
-                "update_time": self.update_time.strftime( '%Y-%m-%d %H:%M:%S')}
+            "mobile": self.mobile,
+            "status": self.status,
+            "type": self.status,
+            "create_time": self.create_time.strftime('%Y-%m-%d %H:%M:%S'),
+            "update_time": self.update_time.strftime('%Y-%m-%d %H:%M:%S')}

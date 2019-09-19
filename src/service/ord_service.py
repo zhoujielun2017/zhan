@@ -1,3 +1,5 @@
+import logging
+
 from mongoengine import ValidationError, DoesNotExist
 
 from model.ord import Ord
@@ -22,10 +24,10 @@ def find_by_id(id: str):
                 "area": area,
                 "gift_card": gift_card}
     except DoesNotExist:
-        print("does not exist %s" % id)
+        logging.error("does not exist %s" % id)
         return None
     except ValidationError:
-        print("id length is wrong %s" % id)
+        logging.error("id length is wrong %s" % id)
         return None
 
 

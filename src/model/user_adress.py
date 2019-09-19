@@ -25,6 +25,7 @@ class UserAddress(Document):
 
     def to_dict(self):
         return {
+            "id": str(self.id),
             "user_id": self.user_id,
             "area1_id": self.area1_id,
             "area1_name": self.area1_name,
@@ -36,3 +37,10 @@ class UserAddress(Document):
             "mobile": self.mobile,
             "address": self.address
         }
+
+    def to_update(self):
+        dd = self.to_dict()
+        for k, v in list(dd.items()):
+            if not v:
+                dd.pop(k)
+        return dd

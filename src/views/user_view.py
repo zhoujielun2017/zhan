@@ -61,6 +61,11 @@ def search():
     mobile = request.args.get("mobile")
     p = Pagination(page, page_size)
     id = user_service.page(p, mobile__contains=mobile)
+    # logging.debug("This is a debug log.哈哈")
+    # logging.info("This is a info log.")
+    # current_app.logger.warning("This is a warning log.")
+    # current_app.logger.error("This is a error log.")
+    # current_app.logger.critical("This is a critical log.")
     return jsonify(Result().success(id.to_dict()))
 
 

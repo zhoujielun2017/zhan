@@ -15,7 +15,7 @@ def login_in():
     data = json.loads(str(content, encoding="utf-8"))
     mobile = data.get('mobile')
     password = data.get('password')
-    if mobile == None or password == None:
+    if not mobile or not password:
         return jsonify(Result().fail(code="param.null", msg="Invalid username/password"))
     user = user_service.find_by_user(mobile, password)
     if user:
@@ -40,7 +40,7 @@ def reg():
     data = json.loads(str(content, encoding="utf-8"))
     mobile = data.get('mobile')
     password = data.get('password')
-    if mobile == None or password == None:
+    if not mobile or not password:
         return jsonify(Result().fail(code="param.null", msg="Invalid username/password"))
     if user_service.find_by_mobile(mobile):
         return jsonify(Result().fail(code="user.exists", msg="user exists"))
@@ -48,5 +48,7 @@ def reg():
         save = UserSave()
         save.mobile = mobile
         save.password = password
-        id = user_service.save(save)
-        return jsonify(Result().success({"id": id}))
+        user_id = user_service.save(save)
+        session["user_id"] = str(user_id)
+        session["mobile"] = str(mobile)
+        return jsonify(Result().success({"id": user_id}))

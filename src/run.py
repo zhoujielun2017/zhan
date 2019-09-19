@@ -8,8 +8,6 @@ from flask_cors import CORS
 
 import factory
 from model.result import Result
-from views import area_view, product_view, sell_view, ord_view, login_view, user_view, gift_card_view, file_view
-from views.manager import user
 
 app = factory.create_app()
 
@@ -19,15 +17,21 @@ CORS(app, supports_credentials=True)
 
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)
 
-app.register_blueprint(sell_view.mod)
-app.register_blueprint(user.muser, url_prefix='/manager/user')
-app.register_blueprint(user_view.user, url_prefix='/user')
-app.register_blueprint(area_view.area, url_prefix='/area')
-app.register_blueprint(file_view.file, url_prefix='/file')
-app.register_blueprint(gift_card_view.gift_card, url_prefix='/gift_card')
-app.register_blueprint(login_view.login, url_prefix='/login')
-app.register_blueprint(product_view.product, url_prefix='/product')
-app.register_blueprint(ord_view.ord, url_prefix='/ord')
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return 'This page does not exist', 404
+
+
+@app.errorhandler(400)
+def page_not_found(error):
+    return 'param error', 400
+
+
+@app.errorhandler(500)
+def special_exception_handler(error):
+    app.logger.error(error)
+    return '请联系管理员', 500
 
 
 @app.before_request
@@ -58,4 +62,10 @@ def af_request(resp):
     return resp
 
 
-app.run(debug=True)
+def page_not_found(error):
+    return 'This page does not exist', 404
+
+
+app.error_handler_spec[None][404] = page_not_found
+
+app.run()

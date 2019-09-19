@@ -22,41 +22,38 @@ def save():
     data = json.loads(str(content, encoding="utf-8"))
     address = UserAddress()
     address.user_id = session.get("user_id")
-    address.area1_id = data.get("area1_id")
-    address.area2_id = data.get("area2_id")
-    address.area3_id = data.get("area3_id")
-    address.area1_name = data.get("area1_name")
-    address.area2_name = data.get("area2_name")
-    address.area3_name = data.get("area3_name")
-    address.name = data.get("area1_name")
-    address.mobile = data.get("mobile")
-    address.address = data.get("address")
+    get_address_from_json(address, data)
     id = user_address_service.save(address)
     return jsonify(Result().success({"id": id}))
 
 
-@user_address.route('/users', methods=['PUT'])
+@user_address.route('/address', methods=['PUT'])
 @swag_from("yml/user_address_view_put.yml")
 def update():
     content = request.data
     data = json.loads(str(content, encoding="utf-8"))
-    address = UserAddress()
-    address.user_id = data.get("user_id")
-    address.area1_id = data.get("area1_id")
-    address.area2_id = data.get("area2_id")
-    address.area3_id = data.get("area3_id")
-    address.area1_name = data.get("area1_name")
-    address.area2_name = data.get("area2_name")
-    address.area3_name = data.get("area3_name")
-    address.name = data.get("area1_name")
-    address.mobile = data.get("mobile")
-    address.address = data.get("address")
-    address.update()
+    id = str(data.get("id"))
+    address = user_address_service.find_by_id(id)
+    if not address:
+        return jsonify(Result().fail("address.not.exists"))
+    get_address_from_json(address, data)
+    user_address_service.update(address)
     return jsonify(Result().success())
 
 
-@user_address.route('/users', methods=['GET'])
-@swag_from("yml/user_view_get.yml")
+def get_address_from_json(address, data):
+    address.area1_id = str(data.get("area1_id"))
+    address.area2_id = str(data.get("area2_id"))
+    address.area3_id = str(data.get("area3_id"))
+    address.area1_name = str(data.get("area1_name"))
+    address.area2_name = str(data.get("area2_name"))
+    address.area3_name = str(data.get("area3_name"))
+    address.mobile = str(data.get("mobile"))
+    address.address = str(data.get("address"))
+
+
+@user_address.route('/address', methods=['GET'])
+@swag_from("yml/user_address_view_get.yml")
 def search():
     page = request.args.get("page")
     page_size = request.args.get("page_size")

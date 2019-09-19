@@ -1,5 +1,3 @@
-import datetime
-
 from mongoengine import DoesNotExist, ValidationError
 
 from model.pagination import Pagination
@@ -29,15 +27,7 @@ def page(page: Pagination):
 
 
 def update(address: UserAddress) -> UserAddress:
-    return address.update(area1_id=address.area1_id,
-                          area2_id=address.area2_id,
-                          area3_id=address.area3_id,
-                          area1_name=address.area1_name,
-                          area2_name=address.area2_name,
-                          area3_name=address.area3_name,
-                          mobile=address.mobile,
-                          address=address.address,
-                          update_time=datetime.datetime.now())
+    return address.update(**address.to_update())
 
 
 def save(address: UserAddress) -> User:
@@ -47,6 +37,5 @@ def save(address: UserAddress) -> User:
 
 def delete(id: str):
     p = find_by_id(id)
-    if p == None:
-        return
-    p.delete()
+    if p:
+        p.delete()

@@ -15,5 +15,5 @@ class OrdSave(object):
     # gift_card_id
     gift_card_id = None
 
-    def addProduct(self, product_dict):
+    def add_product(self, product_dict):
         self.pros.append(product_dict)
