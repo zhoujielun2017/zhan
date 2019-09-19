@@ -10,7 +10,7 @@ connect(alias='gift_card', db='gift_card')
 class GiftCard(Document):
     user_id = StringField()
     product_id = StringField()
-    code = StringField()
+    code = StringField(unique=True)
     password = StringField()
     # 1有效 -1过期 2已使用
     status = IntField(default=1)

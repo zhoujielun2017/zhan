@@ -1,5 +1,5 @@
 from flasgger import swag_from
-from flask import Blueprint, request, json, jsonify
+from flask import Blueprint, request, json, jsonify, session
 
 from model.pagination import Pagination
 from model.result import Result
@@ -21,7 +21,7 @@ def save():
     content = request.data
     data = json.loads(str(content, encoding="utf-8"))
     address = UserAddress()
-    address.user_id = data.get("user_id")
+    address.user_id = session.get("user_id")
     address.area1_id = data.get("area1_id")
     address.area2_id = data.get("area2_id")
     address.area3_id = data.get("area3_id")

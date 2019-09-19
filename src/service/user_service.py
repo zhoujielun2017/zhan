@@ -30,10 +30,6 @@ def page(page: Pagination, **kwargs):
     return users
 
 
-def page2(page: Pagination):
-    users = User.objects[3:6]
-    return users
-
 def find_by_mobile(mobile: str) -> User:
     user = User.objects(mobile=str(mobile)).first()
     return user
@@ -49,9 +45,15 @@ def update(userSave: UserSave) -> User:
     return user.update(password=str(userSave.password), update_time=datetime.datetime.now())
 
 
-def save(userSave: UserSave) -> User:
+def save(userSave: UserSave) -> str:
     owner = User()
     owner.mobile = userSave.mobile
     owner.password = userSave.password
     owner.save()
     return str(owner.id)
+
+
+def delete(id: str):
+    u = find_by_id(id)
+    if u:
+        u.delete()

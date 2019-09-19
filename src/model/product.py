@@ -8,8 +8,7 @@ connect(alias='product', db='product')
 
 
 class Product(Document):
-
-    code = StringField()
+    code = StringField(unique=True)
     title = StringField()
     # 内容
     content = StringField()
@@ -31,13 +30,11 @@ class Product(Document):
     def to_dict(self):
         return {
             "id": str(self.id),
-                "code": self.code,
+            "code": self.code,
             "title": self.title,
-                "content": self.content,
+            "content": self.content,
             "price": self.price,
-                "main_pic": self.main_pic,
-                "pics": self.pics,
-                "create_time": self.create_time.strftime( '%Y-%m-%d %H:%M:%S'),
-                "update_time": self.update_time.strftime( '%Y-%m-%d %H:%M:%S')}
-
-
+            "main_pic": self.main_pic,
+            "pics": self.pics,
+            "create_time": self.create_time.strftime('%Y-%m-%d %H:%M:%S'),
+            "update_time": self.update_time.strftime('%Y-%m-%d %H:%M:%S')}

@@ -7,27 +7,27 @@ class A:
     name = "A"
 
     def get_name(self):
-        print(self.name)
+        return self.name
 
     def set_name(self, value):
         self.name = value
 
-class ProductServiceTest(unittest.TestCase):
-    def test_something(self):
-        print(int(time.time()))
-        print(datetime.datetime.fromtimestamp(int(time.time())).date().isoformat())
+
+class DateTimeTest(unittest.TestCase):
+    def test_time(self):
+        self.assertIsInstance(time.time(), float)
+        self.assertEqual(datetime.datetime.fromtimestamp(1568858752).date().isoformat(), "2019-09-19")
 
     def test_getattr(self):
         a = A()
         b = A()
         b.name = "B"
         na = getattr(a, "name")  # 输出:A   获得name属性
-        print(na)
-        b.get_name()
+        self.assertEqual(na, "A")
+        self.assertEqual(b.get_name(), "B")
 
-
-def test_arg(**kwargs):
-    print(kwargs)
-
-
-test_arg(mobile__contains="12368877399")
+    def test_if(self):
+        x = 2
+        y = 3
+        res = 'a' if x > y else 'b'  # 三元表达式
+        self.assertEqual(res, "b")

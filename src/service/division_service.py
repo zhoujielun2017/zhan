@@ -1,6 +1,8 @@
 import json  # 引用json模块
 import os
 
+from project import project_dir
+
 
 def readAsJson():
     f = open('src\\pca-code.json', encoding='utf-8')
@@ -10,11 +12,12 @@ def readAsJson():
 
 
 def read():
-    path1 = os.path.abspath('../')
-    print("current path %s " % path1)
-    with open(path1 + 'src/pca-code.json', encoding='utf-8') as f:
-        content = f.read()  # 使用loads()方法，需要先读文件
-        return content
+    path = os.path.join(project_dir, 'pca-code.json')
+    if os.path.exists(path):
+        with open(path, encoding='utf-8') as f:
+            content = f.read()  # 使用loads()方法，需要先读文件
+            return content
+    print("file not exist: %s" % path)
     return {}
 
 

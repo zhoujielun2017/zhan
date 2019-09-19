@@ -2,7 +2,7 @@ import datetime
 
 from mongoengine import *
 
-connect(alias='ord_area', db='ord_area')
+connect(db='ord')
 
 
 class OrdArea(Document):
@@ -17,8 +17,6 @@ class OrdArea(Document):
     name = StringField()
     mobile = StringField()
     create_time = DateTimeField(default=datetime.datetime.utcnow)
-
-    meta = {'db_alias': 'ord_area'}
 
     def to_dict(self):
         return {

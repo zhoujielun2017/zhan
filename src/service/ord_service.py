@@ -12,20 +12,20 @@ def all():
     return Ord.objects()
 
 
-def find_by_id(id: str) -> Ord:
+def find_by_id(id: str):
     try:
-        ord = Ord.objects.get(pk=id)
+        o = Ord.objects.get(pk=id)
         products = OrdProduct.objects(ord_id=id)
         area = OrdArea.objects(ord_id=id).first()
         gift_card = OrdGiftCard.objects(ord_id=id).first()
-        return {"ord": ord, "products": products,
+        return {"ord": o, "products": products,
                 "area": area,
                 "gift_card": gift_card}
     except DoesNotExist:
-        print("does not exist")
+        print("does not exist %s" % id)
         return None
     except ValidationError:
-        print("id length is wrong")
+        print("id length is wrong %s" % id)
         return None
 
 
@@ -80,3 +80,13 @@ def page(page: Pagination):
         list.append(dict)
     page_obj["list"] = list
     return page_obj
+
+
+def delete(id: str):
+    o = find_by_id(id)
+    if o:
+        o.get("ord").delete()
+        for p in o.get("products"):
+            p.delete()
+        o.get("area").delete()
+        o.get("gift_card").delete()

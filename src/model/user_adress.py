@@ -4,7 +4,7 @@ from mongoengine import *
 
 from mongoenginepagination import Document
 
-connect(alias='user_address', db='user_address')
+connect(alias='user_address', db='user')
 
 
 class UserAddress(Document):

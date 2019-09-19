@@ -10,7 +10,7 @@ connect(alias='user', db='user')
 class User(Document):
     # userid = StringField(default=datetime.datetime.utcnow)
     name = StringField()
-    mobile = StringField()
+    mobile = StringField(unique=True)
     password = StringField()
     status = IntField()
     type = IntField()

@@ -37,15 +37,19 @@ def find_by_code(code: str) -> Product:
 
 
 def update(save: ProductSave) -> Product:
+    if not save.id:
+        raise ValueError("id can not be null")
     p = find_by_id(save.id)
     dd = save.to_update()
-    p.update(**dd)
-
+    return p.update(**dd)
 
 
 def save(save: ProductSave) -> Product:
     p = Product()
-    p.code = shortuuid.uuid()
+    if save.code:
+        p.code = save.code
+    else:
+        p.code = shortuuid.uuid()
     p.title = save.title
     p.content = save.content
     p.price = save.price
@@ -54,3 +58,9 @@ def save(save: ProductSave) -> Product:
     p.view_count = 0
     p.stock = 0
     return p.save()
+
+
+def delete(id: str) -> Product:
+    p = find_by_id(id)
+    if p:
+        p.delete()

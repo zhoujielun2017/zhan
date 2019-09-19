@@ -1,3 +1,5 @@
+import datetime
+
 from mongoengine import DoesNotExist, ValidationError
 
 from model.pagination import Pagination
@@ -26,8 +28,16 @@ def page(page: Pagination):
     return users
 
 
-def update(address: UserAddress) -> User:
-    return address.update()
+def update(address: UserAddress) -> UserAddress:
+    return address.update(area1_id=address.area1_id,
+                          area2_id=address.area2_id,
+                          area3_id=address.area3_id,
+                          area1_name=address.area1_name,
+                          area2_name=address.area2_name,
+                          area3_name=address.area3_name,
+                          mobile=address.mobile,
+                          address=address.address,
+                          update_time=datetime.datetime.now())
 
 
 def save(address: UserAddress) -> User:

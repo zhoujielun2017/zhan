@@ -8,6 +8,7 @@ class Person(Document):
     name = StringField()
 
 
+@unittest.skip
 class TestPerson(unittest.TestCase):
 
     @classmethod
@@ -18,6 +19,7 @@ class TestPerson(unittest.TestCase):
     def tearDownClass(cls):
         disconnect()
 
+    @unittest.skip
     def test_thing(self):
         pers = Person(name='John')
         pers.save()
@@ -25,6 +27,7 @@ class TestPerson(unittest.TestCase):
         fresh_pers = Person.objects().first()
         self.assertEqual(fresh_pers.name, 'John')
 
+    @unittest.skip
     def test_md5(self):
         m = hashlib.md5()
         # m.update(b'zxcvzxcv163.com')

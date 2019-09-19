@@ -70,6 +70,7 @@ class Pagination(object):
             "list": queryset
         }
 
+
 class ListFieldPagination(Pagination):
 
     def __init__(self, queryset, page, page_size,
@@ -97,7 +98,7 @@ class ListFieldPagination(Pagination):
         self.total = len(self.queryset)
         start_index = (page - 1) * page_size
         if start_index > self.total:
-            print("start index greater than total")
+            print("start index greater than total %s %s" % (page, self.total))
             return
         for key, value in list(kwargs.items()):
             if not value:
@@ -115,6 +116,9 @@ class ListFieldPagination(Pagination):
 
     def next(self, error_out=False):
         return self.page * self.page_size < self.total
+
+    def total(self):
+        return self.total
 
     def to_dict(self):
         queryset = list(map(lambda employee: employee.to_dict(), list(self.items)))

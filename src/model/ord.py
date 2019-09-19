@@ -11,7 +11,8 @@ class Ord(Document):
     user_id = StringField()
     create_time = DateTimeField(default=datetime.datetime.utcnow)
     update_time = DateTimeField(default=datetime.datetime.utcnow)
-    meta = {'strict': False, 'db_alias': 'ord'}
+    meta = {'strict': False, 'db_alias': 'ord',
+            'collection': 'ord'}
 
     def to_dict(self):
         return {

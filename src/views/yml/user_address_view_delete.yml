@@ -1,0 +1,16 @@
+删除用户收货地址
+---
+tags:
+  - user_address
+parameters:
+  - name: id
+    in: path
+    description: JSON parameters.
+    schema:
+      properties:
+        id:
+          type: string
+          example: 1000
+responses:
+  200:
+    description: description

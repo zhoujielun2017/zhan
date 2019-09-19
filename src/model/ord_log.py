@@ -1,11 +1,12 @@
-from mongoengine import *
 import datetime
 
-connect(alias='ord_log', db='ord_log')
+from mongoengine import *
+
+connect(db='ord')
 
 
 class OrdLog(Document):
     orderid = StringField()
     create_time = DateTimeField(default=datetime.datetime.utcnow)
 
-    meta = {'db_alias': 'ord_log'}
+    meta = {'collection': 'ord_log'}

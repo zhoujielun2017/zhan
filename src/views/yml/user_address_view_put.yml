@@ -1,0 +1,40 @@
+更新用户收货地址
+---
+tags:
+  - user_address
+parameters:
+  - name: body
+    in: body
+    description: JSON parameters.
+    schema:
+      properties:
+        id:
+          type: string
+          example: 1000xxx
+        area1_id:
+          type: string
+          example: 1000
+        area2_id:
+          type: string
+          example: 10001
+        area3_id:
+          type: string
+          example: 100011
+        area1_name:
+          type: string
+          example: 北京
+        area2_name:
+          type: string
+          example: 东城区
+        area3_name:
+          type: string
+          example: 朝阳大街
+        mobile:
+          type: string
+          example: 18666666666
+        address:
+          type: string
+          example: xx小区xx栋xxx房
+responses:
+  200:
+    description: description
