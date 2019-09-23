@@ -66,7 +66,7 @@ def create_gift_card():
     product = product_service.find_by_id(gift.product_id)
     if not product:
         return jsonify(Result().fail(code="product.not.exist", msg="product not exist"))
-    save.addProduct({"id": str(product.id), "num": 1, "title": product.title})
+    save.add_product({"id": str(product.id), "num": 1, "title": product.title})
     save.areas = areas
     save.name = name
     save.mobile = mobile
