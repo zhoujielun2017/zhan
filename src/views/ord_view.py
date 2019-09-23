@@ -27,7 +27,7 @@ def create():
         product = product_service.find_by_id(pid)
         if not product:
             return jsonify(Result().fail(code="product.not.exist", msg="product not exist"))
-        save.addProduct({"id": str(product.id), "num": num, "title": product.title})
+        save.add_product({"id": str(product.id), "num": num, "title": product.title})
     save.areas = areas
     save.name = name
     save.mobile = mobile
