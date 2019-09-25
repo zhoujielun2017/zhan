@@ -1,4 +1,5 @@
 class GiftCardCode(object):
+    product_id = None
 
     @property
     def area(self):
@@ -15,7 +16,6 @@ class GiftCardCode(object):
     @year.setter
     def year(self, value):
         self._year = value
-
 
     @property
     def unit(self):
@@ -42,4 +42,4 @@ class GiftCardCode(object):
         self._num = str(value).zfill(6)
 
     def code(self):
-        return str(self.area)+str(self.year)+str(self.unit)+str(self.print)+str(self.num)
+        return str(self.area) + str(self.year) + str(self.unit) + str(self.print) + str(self.num)

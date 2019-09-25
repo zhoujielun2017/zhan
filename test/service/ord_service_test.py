@@ -1,5 +1,6 @@
 import unittest
 
+from model.ord_product import OrdProduct
 from model.ord_save import OrdSave
 from model.pagination import Pagination
 from service import ord_service
@@ -8,9 +9,13 @@ from service import ord_service
 class OrdServiceTest(unittest.TestCase):
 
     def setUp(self):
-        print("pass")
         save = OrdSave()
-        save.pros = [{"id": "sdfsf", "num": 1, "title": "test_tile"}]
+        op = OrdProduct()
+        op.product_id = "asdf"
+        op.num = 1
+        op.title = "test_title"
+        op.main_pic = "test_main_pic"
+        save.pros = [op]
         save.areas = ["test_1", "test2_2"]
         save.mobile = "test_123123"
         save.name = "test_123123"

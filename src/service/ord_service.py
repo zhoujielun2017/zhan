@@ -34,18 +34,18 @@ def find_by_id(id: str):
 def save(dto: OrdSave):
     ord = Ord()
     ord.user_id = dto.user_id
+    ord.status = dto.status
     ord.save()
     # 商品
     for pro in dto.pros:
-        ord_pro = OrdProduct()
-        ord_pro.ord_id = str(ord.id)
-        ord_pro.product_id = pro.get("id")
-        ord_pro.num = pro.get("num")
-        ord_pro.title = pro.get("title")
-        ord_pro.save()
+        pro.ord_id = str(ord.id)
+        pro.save()
     # 收货地址
     ord_area = OrdArea()
     ord_area.ord_id = str(ord.id)
+    ord_area.name = str(dto.name)
+    ord_area.mobile = str(dto.mobile)
+    ord_area.address = str(dto.address)
     if len(dto.areas) > 0:
         ord_area.area1_id = dto.areas[0].split("_")[0]
         ord_area.area1_name = dto.areas[0].split("_")[1]

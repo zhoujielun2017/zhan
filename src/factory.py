@@ -4,6 +4,7 @@ import os
 import yaml
 from flask import Flask
 
+from project import project_dir
 from views import area_view, product_view, sell_view, ord_view, login_view, user_view, gift_card_view, file_view, \
     user_address_view
 from views.manager import user
@@ -12,10 +13,9 @@ from views.manager import user
 def create_app(config_path=None):
     # 读取配置文件
     if not config_path:
-        pwd = os.getcwd()
-        config_path = os.path.join(pwd, 'config.yaml')
+        config_path = os.path.join(project_dir, 'config.yaml')
     conf = read_yaml(config_path)
-    print("STATIC_FOLDER %s" % conf["STATIC_FOLDER"])
+    # print("STATIC_FOLDER %s" % conf["STATIC_FOLDER"])
     app = Flask(__name__,
                 template_folder='./web/templates',
                 static_folder=conf["STATIC_FOLDER"],

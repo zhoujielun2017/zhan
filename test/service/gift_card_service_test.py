@@ -1,11 +1,8 @@
-import sys
 import unittest
 
 from const import const
 from model.gift_card_code import GiftCardCode
 from model.pagination import Pagination
-
-sys.path.append('../')
 from service import gift_card_service
 
 

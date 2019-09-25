@@ -32,6 +32,7 @@ def find_by_code(code: str) -> GiftCard:
 
 def save(code: GiftCardCode) -> GiftCard:
     p = GiftCard()
+    p.product_id = code.product_id
     p.code = code.code()
     r1 = random.randint(100000000, 999999999)
     r2 = random.randint(100000000, 999999999)

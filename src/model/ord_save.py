@@ -1,3 +1,6 @@
+from model.ord_product import OrdProduct
+
+
 class OrdSave(object):
     ord_id = None
     user_id = None
@@ -14,6 +17,11 @@ class OrdSave(object):
     gift_card_code = None
     # gift_card_id
     gift_card_id = None
+    # status
+    status = None
 
-    def add_product(self, product_dict):
-        self.pros.append(product_dict)
+    def add_product(self, ord_product: OrdProduct):
+        self.pros.append(ord_product)
+
+    def to_ord_product(self):
+        return []

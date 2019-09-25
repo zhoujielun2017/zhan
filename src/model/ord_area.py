@@ -25,4 +25,8 @@ class OrdArea(Document):
             "area2_id": self.area2_id,
             "area2_name": self.area2_name,
             "area3_id": self.area3_id,
-            "area3_name": self.area3_name}
+            "area3_name": self.area3_name,
+            "name": self.name,
+            "mobile": self.mobile,
+            "address": self.address,
+        }

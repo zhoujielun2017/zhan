@@ -25,7 +25,7 @@ def save():
     mobile = data.get('mobile')
     password = data.get('password')
     if not mobile or not password:
-        return '{"code": "fail", "msg": "Invalid username/password"}'
+        return jsonify(Result().fail(code="param.null"))
     if user_service.find_by_user(mobile, password):
         return jsonify(Result().fail(code="user.exists", msg="user exists"))
     save = UserSave()

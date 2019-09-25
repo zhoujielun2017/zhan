@@ -1,3 +1,5 @@
+from json import JSONDecodeError
+
 from flasgger import swag_from
 from flask import Blueprint, request, session, json, jsonify
 
@@ -12,7 +14,10 @@ login = Blueprint('login', __name__)
 @swag_from("yml/login_view_in.yml")
 def login_in():
     content = request.data
-    data = json.loads(str(content, encoding="utf-8"))
+    try:
+        data = json.loads(str(content, encoding="utf-8"))
+    except JSONDecodeError:
+        return jsonify(Result().fail(code="error.json"))
     mobile = data.get('mobile')
     password = data.get('password')
     if not mobile or not password:

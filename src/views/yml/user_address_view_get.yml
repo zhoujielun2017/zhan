@@ -11,4 +11,11 @@ parameters:
     default: 10
 responses:
   200:
-    description: description
+    description: A list of colors (may be filtered by palette)
+    schema:
+      type: object
+      properties:
+        code:
+          type: string
+          enum: ['success', 'rgb', 'cmyk']
+

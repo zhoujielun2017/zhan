@@ -27,3 +27,10 @@ parameters:
 responses:
   200:
     description: description
+    schema:
+      type: object
+      properties:
+        code:
+          type: string
+          enum: ['success']
+          description: ''

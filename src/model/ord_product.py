@@ -8,6 +8,7 @@ class OrdProduct(Document):
     ord_id = StringField()
     product_id = StringField()
     title = StringField()
+    main_pic = StringField()
     price = IntField()
     num = IntField()
     create_time = DateTimeField(default=datetime.datetime.utcnow)
@@ -17,5 +18,6 @@ class OrdProduct(Document):
         return {
             "product_id": self.product_id,
             "title": self.title,
+            "main_pic": self.main_pic,
             "num": self.num
         }

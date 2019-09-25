@@ -8,10 +8,10 @@ parameters:
     default: 0120190101000001
 responses:
   200:
-    description: description
+    description: status 1有效 -1过期 2已使用
     schema:
       properties:
-        status:
+        code:
           type: string
-          description:  1有效 -1过期 2已使用
-          default: 1
+          enum: ['success','gift_card.not.found','product.not.bind']
+          description: ''

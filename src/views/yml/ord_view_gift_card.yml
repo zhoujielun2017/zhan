@@ -35,3 +35,10 @@ parameters:
 responses:
   200:
     description: description
+    schema:
+      type: object
+      properties:
+        code:
+          type: string
+          enum: ['success','gift.not.found','gift.password.error','gift.product.relation','gift.card.expire','product.not.exist']
+          description: ''

@@ -1,6 +1,7 @@
 from flasgger import swag_from
 from flask import Blueprint, request, json, jsonify, session
 
+from model.ord_product import OrdProduct
 from model.ord_save import OrdSave
 from model.pagination import Pagination
 from model.result import Result
@@ -33,6 +34,7 @@ def create():
     save.mobile = mobile
     save.address = address
     save.user_id = user_id
+    save.status = 1
     id = ord_service.save(save)
     return jsonify(Result().success({"id": id}))
 
@@ -65,12 +67,18 @@ def create_gift_card():
     if not product:
         return jsonify(Result().fail(code="product.not.exist", msg="product not exist"))
     gift_card_service.update_used(code, password)
-    save.add_product({"id": str(product.id), "num": 1, "title": product.title})
+    ord_product = OrdProduct()
+    ord_product.product_id = str(product.id)
+    ord_product.num = 1
+    ord_product.title = product.title
+    ord_product.main_pic = product.main_pic
+    save.add_product(ord_product)
     save.areas = areas
     save.name = name
     save.mobile = mobile
     save.address = address
     save.user_id = user_id
+    save.status = 3
     id = ord_service.save(save)
     return jsonify(Result().success({"id": id}))
 
@@ -94,7 +102,7 @@ def detail(id):
     if not detail or not detail.get("ord"):
         return jsonify(Result().fail(code="ord.not.exist"))
     if not detail.get("ord").user_id or user_id != detail.get("ord").user_id:
-        return jsonify(Result().fail(code="ord.not.exist", msg="ord is not yours"))
+        return jsonify(Result().fail(code="ord.not.yours", msg="ord is not yours"))
     ps = list(map(lambda item: item.to_dict(), list(detail.get("products"))))
     return jsonify(Result().success({"ord": detail.get("ord").to_dict(), "products": ps,
                                      "area": None if not detail.get("area") else detail.get("area").to_dict(),
