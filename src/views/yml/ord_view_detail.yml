@@ -16,5 +16,6 @@ responses:
           type: string
           enum: ['success','ord.not.exist','ord.not.yours']
           description: ''
-        status: int
+        status:
+          type: int
           description: '1 待支付 2 已支付 3 待发货 4 已发货 5 待收货 6 已收货 7 待评价 8 已评价'
