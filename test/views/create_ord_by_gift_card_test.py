@@ -7,7 +7,7 @@ from model.product_save import ProductSave
 from service import gift_card_service, product_service
 
 
-class OrdViewTest(unittest.TestCase):
+class CreateOrdByGiftCardTest(unittest.TestCase):
     """为登录逻辑编写测试案例"""
 
     def setUp(self):
@@ -55,7 +55,7 @@ class OrdViewTest(unittest.TestCase):
         r.print = "01"
         r.year = "2019"
         r.unit = "01"
-        r.num = "000011"
+        r.num = "000001"
         gift_card = gift_card_service.find_by_code(r.code())
         gift_card.update(status=1, product_id=str(self.product.id))
         self.gift_card = gift_card

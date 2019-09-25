@@ -15,6 +15,7 @@ class ProductServiceTest(unittest.TestCase):
         save.price = 2000
         self.product_save = save
         p = product_service.save(self.product_save)
+        self.product = p
         self.assertEqual(p.code, self.product_save.code)
 
     def tearDown(self):

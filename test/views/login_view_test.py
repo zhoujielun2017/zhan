@@ -2,6 +2,7 @@ import json
 import unittest
 
 from app import app
+from test.service.user_service_test import UserServiceTest
 
 
 class LoginTest(unittest.TestCase):
@@ -16,17 +17,18 @@ class LoginTest(unittest.TestCase):
         response = self.client.post('/login/in', data={})
         json_data = response.data
         json_dict = json.loads(json_data)
-        self.assertEqual(json_dict['code'], "error.json", '状态码返回错误')
+        self.assertEqual(json_dict['code'], "error.json")
 
     def test_empty_username_password(self):
         response = self.client.post('/login/in', data=json.dumps({'mobile': ''}))
         json_data = response.data
         json_dict = json.loads(json_data)
-        self.assertEqual(json_dict['code'], "param.null", '状态码返回错误')
+        self.assertEqual(json_dict['code'], "param.null")
 
     def test_login_in(self):
+        UserServiceTest().setUp()
         response = app.test_client().post('/login/in', data=json.dumps({'mobile': '18577778888', 'password': '123'}))
         json_data = response.data
         json_dict = json.loads(json_data)
-        self.assertIn('code', json_dict, '数据格式返回错误')
-        self.assertEqual(json_dict['code'], 'success', '状态码返回错误')
+        self.assertIn('code', json_dict)
+        self.assertEqual(json_dict['code'], 'success')

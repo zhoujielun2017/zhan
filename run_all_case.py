@@ -9,6 +9,7 @@ report_path = os.path.join(os.getcwd(), "report")
 
 
 def all_case():
+
     discover = unittest.defaultTestLoader.discover(case_path,
                                                    pattern="*_test.py",
                                                    top_level_dir=None)
@@ -16,6 +17,7 @@ def all_case():
 
 
 if __name__ == "__main__":
+    os.remove(report_path)
     with open(report_path, "a") as report:
         runner = unittest.TextTestRunner(stream=report, verbosity=2)
         runner.run(all_case())

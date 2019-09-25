@@ -17,7 +17,9 @@ class GiftCardServiceTest(unittest.TestCase):
         r.num = "000011"
         self.code = r
         self.assertEqual(self.code.code(), "0120190101000011")
-        gift_card_service.save(self.code)
+        gift_card = gift_card_service.find_by_code(self.code.code())
+        if not gift_card:
+            gift_card_service.save(self.code)
 
     def tearDown(self):
         gift_card = gift_card_service.find_by_code(self.code.code())

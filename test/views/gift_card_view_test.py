@@ -2,34 +2,21 @@ import json
 import unittest
 
 from app import app
-from model.product_save import ProductSave
-from service import product_service
+from test.service.product_service_test import ProductServiceTest
 
 
-class OrdViewTest(unittest.TestCase):
+class GiftCardViewTest(unittest.TestCase):
     """为登录逻辑编写测试案例"""
 
     def setUp(self):
         app.testing = True
         self.client = app.test_client()
+        self.product_service_test = ProductServiceTest()
+        self.product_service_test.setUp()
+        self.product = self.product_service_test.product
 
     def tearDown(self):
-        p = product_service.find_by_code(self.product_save.code)
-        product_service.delete(str(p.id))
-        p2 = product_service.find_by_code(self.product_save.code)
-        self.assertIsNone(p2)
-
-    def get_product(self):
-        save = ProductSave()
-        save.code = "test_5d79c3d07c1f2df47d4cb991"
-        save.title = "test_product_title"
-        save.content = "test_product_content"
-        save.main_pic = "test_product_main_pic"
-        save.price = 2000
-        self.product_save = save
-        p = product_service.save(self.product_save)
-        self.product = p
-        self.assertEqual(p.code, self.product_save.code)
+        self.product_service_test.tearDown()
 
     def test_save_gift_card(self):
         jsonstr = json.dumps({
@@ -46,7 +33,6 @@ class OrdViewTest(unittest.TestCase):
         self.assertEqual(json_dict['code'], "success")
 
     def test_bind_product_range(self):
-        self.get_product()
         jsonstr = json.dumps({
             "product_id": str(self.product.id),
             "start_code": "0120190101000100",

@@ -48,6 +48,9 @@ def save(save: ProductSave) -> Product:
     p = Product()
     if save.code:
         p.code = save.code
+        pro = find_by_code(p.code)
+        if pro:
+            return pro
     else:
         p.code = shortuuid.uuid()
     p.title = save.title
