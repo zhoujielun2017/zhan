@@ -1,3 +1,5 @@
+from json import JSONDecodeError
+
 from flasgger import swag_from
 from flask import Blueprint, request, json, jsonify, session
 
@@ -19,7 +21,10 @@ def detail(id):
 @swag_from("yml/user_address_view_post.yml")
 def save():
     content = request.data
-    data = json.loads(str(content, encoding="utf-8"))
+    try:
+        data = json.loads(str(content, encoding="utf-8"))
+    except JSONDecodeError:
+        return jsonify(Result().fail(code="error.json"))
     address = UserAddress()
     address.user_id = session.get("user_id")
     get_address_from_json(address, data)
@@ -31,7 +36,10 @@ def save():
 @swag_from("yml/user_address_view_put.yml")
 def update():
     content = request.data
-    data = json.loads(str(content, encoding="utf-8"))
+    try:
+        data = json.loads(str(content, encoding="utf-8"))
+    except JSONDecodeError:
+        return jsonify(Result().fail(code="error.json"))
     id = str(data.get("id"))
     address = user_address_service.find_by_id(id)
     if not address:

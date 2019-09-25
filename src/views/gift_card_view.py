@@ -1,3 +1,5 @@
+from json import JSONDecodeError
+
 import flask_excel as excel
 from flasgger import swag_from
 from flask import Blueprint, request, session, json, jsonify
@@ -14,7 +16,10 @@ gift_card = Blueprint('gift_card', __name__)
 @swag_from("yml/gift_cards_view_add.yml")
 def save():
     content = request.data
-    data = json.loads(str(content, encoding="utf-8"))
+    try:
+        data = json.loads(str(content, encoding="utf-8"))
+    except JSONDecodeError:
+        return jsonify(Result().fail(code="error.json"))
     area = data.get('area')
     year = data.get('year')
     unit = data.get('unit')
@@ -44,7 +49,10 @@ def save():
 @swag_from("yml/gift_cards_view_put.yml")
 def update():
     content = request.data
-    data = json.loads(str(content, encoding="utf-8"))
+    try:
+        data = json.loads(str(content, encoding="utf-8"))
+    except JSONDecodeError:
+        return jsonify(Result().fail(code="error.json"))
     code = str(data['code'])
     password = str(data['password'])
     id = gift_card_service.update_used(code, password)
@@ -56,7 +64,10 @@ def update():
 @swag_from("yml/gift_cards_view_bind.yml")
 def bind_user():
     content = request.data
-    data = json.loads(str(content, encoding="utf-8"))
+    try:
+        data = json.loads(str(content, encoding="utf-8"))
+    except JSONDecodeError:
+        return jsonify(Result().fail(code="error.json"))
     code = str(data['code'])
     password = str(data['password'])
     user_id = session.get("user_id")
@@ -69,7 +80,10 @@ def bind_user():
 @swag_from("yml/gift_cards_view_product.yml")
 def bind_product():
     content = request.data
-    data = json.loads(str(content, encoding="utf-8"))
+    try:
+        data = json.loads(str(content, encoding="utf-8"))
+    except JSONDecodeError:
+        return jsonify(Result().fail(code="error.json"))
     product_id = str(data['product_id'])
     codes = data['codes']
     p = product_service.find_by_id(product_id)
@@ -84,7 +98,10 @@ def bind_product():
 @swag_from("yml/gift_cards_view_product_range.yml")
 def bind_product_range():
     content = request.data
-    data = json.loads(str(content, encoding="utf-8"))
+    try:
+        data = json.loads(str(content, encoding="utf-8"))
+    except JSONDecodeError:
+        return jsonify(Result().fail(code="error.json"))
     product_id = str(data['product_id'])
     start_code = data['start_code']
     end_code = data['end_code']

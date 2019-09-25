@@ -1,3 +1,5 @@
+from json import JSONDecodeError
+
 from flasgger import swag_from
 from flask import Blueprint, request, json, jsonify, session
 
@@ -15,7 +17,10 @@ ord = Blueprint('ord', __name__)
 def create():
     user_id = session.get("user_id")
     content = request.data
-    data = json.loads(str(content, encoding="utf-8"))
+    try:
+        data = json.loads(str(content, encoding="utf-8"))
+    except JSONDecodeError:
+        return jsonify(Result().fail(code="error.json"))
     pros = data.get('pros')
     areas = data.get('areas')
     name = data.get('name')
@@ -44,7 +49,10 @@ def create():
 def create_gift_card():
     user_id = session.get("user_id")
     content = request.data
-    data = json.loads(str(content, encoding="utf-8"))
+    try:
+        data = json.loads(str(content, encoding="utf-8"))
+    except JSONDecodeError:
+        return jsonify(Result().fail(code="error.json"))
     code = data.get('code')
     password = data.get('password')
     areas = data.get('areas')

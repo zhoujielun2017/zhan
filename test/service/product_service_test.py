@@ -37,7 +37,7 @@ class ProductServiceTest(unittest.TestCase):
     def test_page(self):
         p = Pagination(1, 4)
         pros = product_service.page(p)
-        print(pros.to_dict())
+        # print(pros.to_dict())
         self.assertGreater(pros.total, 0)
 
     def test_find_by_id(self):
