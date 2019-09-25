@@ -31,3 +31,7 @@ class DateTimeTest(unittest.TestCase):
         y = 3
         res = 'a' if x > y else 'b'  # 三元表达式
         self.assertEqual(res, "b")
+
+    def test_split(self):
+        self.assertEqual("0120190101000011"[-6:], "000011")
+        self.assertEqual("0120190101000011"[:-6], "0120190101")

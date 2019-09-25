@@ -79,6 +79,31 @@ def bind_product():
     return jsonify(Result().success())
 
 
+# 礼品卡绑定商品
+@gift_card.route('/product/range', methods=['PUT'])
+@swag_from("yml/gift_cards_view_product_range.yml")
+def bind_product_range():
+    content = request.data
+    data = json.loads(str(content, encoding="utf-8"))
+    product_id = str(data['product_id'])
+    start_code = data['start_code']
+    end_code = data['end_code']
+    code = start_code[:-6]
+    num_start = int(start_code[-6:])
+    num_end = int(end_code[-6:])
+    # 0120190101000011
+    p = product_service.find_by_id(product_id)
+    if not p:
+        return jsonify(Result().fail(code="product.not.found"))
+    if num_end - num_start > 1000:
+        return jsonify(Result().fail(code="param.range", msg="end - start over 1000"))
+    codes = []
+    for num in range(int(num_start), int(num_end)):
+        codes.append(code + str(num).zfill(6))
+    gift_card_service.update_bind_product(codes, product_id)
+    return jsonify(Result().success())
+
+
 @gift_card.route('/gift_cards', methods=['GET'])
 @swag_from("yml/gift_cards_view_get.yml")
 def search():
@@ -115,5 +140,5 @@ def export():
     page_size = request.args.get("page_size")
     p = Pagination(page, page_size)
     pros = gift_card_service.page(p)
-    column_names = ['code', 'password']
+    column_names = ['code', 'password', 'product_id', 'status']
     return excel.make_response_from_query_sets(pros.queryset, column_names, "xls")

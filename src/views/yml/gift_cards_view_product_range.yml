@@ -1,4 +1,4 @@
-礼品卡绑定商品(多个)
+礼品卡绑定商品(区间)
 ---
 tags:
   - gift_card
@@ -12,10 +12,14 @@ parameters:
           type: string
           description: 商品id
           example: "5d79e24f8657d605aed14bf2"
-        codes:
-          type: array
+        start_code:
+          type: stirng
           description: 礼品卡号码
-          example: ["0120190101000001","0120190101000002","0120190101000003"]
+          example: "0120190101000001"
+        end_code:
+          type: stirng
+          description: 礼品卡号码
+          example: "0120190101000100"
 responses:
   200:
     description: description
