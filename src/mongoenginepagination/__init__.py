@@ -96,7 +96,10 @@ class ListFieldPagination(Pagination):
             self.total = 0
             print("query set is None")
             return
-        self.total = len(self.queryset)
+        if kwargs:
+            self.total = len(self.queryset(**kwargs))
+        else:
+            self.total = len(self.queryset)
         start_index = (page - 1) * page_size
         if start_index > self.total:
             print("start index greater than total %s %s" % (page, self.total))

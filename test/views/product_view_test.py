@@ -10,11 +10,12 @@ class ProductViewTest(unittest.TestCase):
     def setUp(self):
         app.testing = True
         self.client = app.test_client()
+        self.save_product()
 
     def tearDown(self):
-        pass
+        self.delete_product()
 
-    def test_save_product(self):
+    def save_product(self):
         jsonstr = json.dumps({
             "content": "test_contet",
             "main_pic": "/2019/09/05/12312312.jpg",
@@ -30,7 +31,13 @@ class ProductViewTest(unittest.TestCase):
         self.assertIsNotNone(code)
         psaved = product_service.find_by_code(code)
         self.product = psaved
-        self.delete_product()
+
+    def test_get_product_id(self):
+        if self.product:
+            response = self.client.get('/product/id/%s' % str(self.product.id))
+            json_data = response.data
+            json_dict = json.loads(json_data)
+            self.assertEqual(json_dict['code'], "success")
 
     def delete_product(self):
         if self.product:

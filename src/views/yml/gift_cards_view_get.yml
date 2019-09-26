@@ -9,9 +9,12 @@ parameters:
   - name: page_size
     in: query
     default: 10
+  - name: status
+    in: query
+    default: 1
 responses:
   200:
-    description: description
+    description: "1有效 -1过期 2已使用"
     schema:
       type: object
       properties:

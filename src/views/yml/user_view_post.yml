@@ -16,6 +16,10 @@ parameters:
           type: string
           description: password.
           example: 123
+        head_url:
+          type: string
+          description: head_url
+          example: head_url/xx.jpg
 responses:
   200:
     description: description

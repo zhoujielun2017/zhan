@@ -38,5 +38,11 @@ class GiftCardServiceTest(unittest.TestCase):
 
     def test_page(self):
         r = Pagination(1, 10)
-        pros = gift_card_service.page(r)
+        pros = gift_card_service.page(r, status=2)
+        for item in pros.items:
+            self.assertEqual(item.status, 2)
         self.assertGreater(pros.total, 0)
+
+    def test_page_status_1(self):
+        r = Pagination(1, 10)
+        pros = gift_card_service.page(r, status=1)

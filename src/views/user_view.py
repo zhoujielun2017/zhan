@@ -30,6 +30,7 @@ def save():
         return jsonify(Result().fail(code="error.json"))
     mobile = data.get('mobile')
     password = data.get('password')
+    head_url = data.get('head_url')
     if not mobile or not password:
         return jsonify(Result().fail(code="param.null"))
     if user_service.find_by_user(mobile, password):
@@ -37,6 +38,7 @@ def save():
     save = UserSave()
     save.mobile = mobile
     save.password = password
+    save.head_url = head_url
     uid = user_service.save(save)
     return jsonify(Result().success({"id": uid}))
 
@@ -52,9 +54,9 @@ def update():
     mobile = data.get('mobile')
     password = data.get('password')
     if not mobile:
-        return '{"code": "param.null", "msg": "Invalid username/password"}'
+        return jsonify(Result().fail(code="param.null", msg="Invalid username/password"))
     if not user_service.find_by_mobile(mobile):
-        return '{"code": "user.exists", "msg": "user exists"}'
+        return jsonify(Result().fail(code="user.exists"))
     save = UserSave()
     save.mobile = mobile
     save.password = password

@@ -1,0 +1,23 @@
+COMMON: &common #标识
+  DEBUG: False
+  SECRET_KEY: mdd1yyhhbbDSAFDSF
+  STATIC_FOLDER: '/data/static'
+  UPLOAD_IMAGE: /data/upload/image
+
+DEVELOPMENT: &development
+  <<: *common # 继承common，没有重新定义的变量，使用common变量值
+  DEBUG: True
+  UPLOAD_IMAGE: D:/data/upload/image
+  STATIC_FOLDER: 'D:/data/static'
+
+PRODUCTION: &production
+  <<: *common
+  CURRENT: 1
+  CHECK_LOGIN: 0
+  ALLOW_NOT_LOGIN:
+    - /login/in
+    - /login/reg
+    - /area/areas
+    - /apidocs/*
+    - /apispec_1.json
+    - /flasgger_static/*

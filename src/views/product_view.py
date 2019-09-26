@@ -11,6 +11,15 @@ from service import product_service
 product = Blueprint('product', __name__)
 
 
+@product.route('/id/<pid>')
+@swag_from("yml/product_view_id.yml")
+def detail_by_id(pid):
+    p = product_service.find_by_id(pid)
+    if not p:
+        return jsonify(Result().fail(code="not.exists", msg="not.exists"))
+    return jsonify(Result().success(p.to_dict()))
+
+
 @product.route('/<code>')
 @swag_from("yml/product_view_code.yml")
 def detail(code):

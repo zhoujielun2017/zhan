@@ -42,3 +42,17 @@ class GiftCardViewTest(unittest.TestCase):
         json_data = response.data
         json_dict = json.loads(json_data)
         self.assertEqual(json_dict['code'], "success")
+
+    def test_page_empty_status(self):
+        response = self.client.get('/gift_card/gift_cards?page=1&page_size=10')
+        json_data = response.data
+        json_dict = json.loads(json_data)
+        print(json_dict)
+        self.assertEqual(json_dict['code'], "success")
+
+    def test_page(self):
+        response = self.client.get('/gift_card/gift_cards?page=1&page_size=10&status=1')
+        json_data = response.data
+        json_dict = json.loads(json_data)
+        print(json_dict)
+        self.assertEqual(json_dict['code'], "success")

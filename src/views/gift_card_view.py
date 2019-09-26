@@ -126,8 +126,9 @@ def bind_product_range():
 def search():
     page = request.args.get("page")
     page_size = request.args.get("page_size")
+    status = request.args.get("status")
     p = Pagination(page, page_size)
-    pros = gift_card_service.page(p)
+    pros = gift_card_service.page(p, status=status)
     return jsonify(Result().success(pros.to_dict()))
 
 

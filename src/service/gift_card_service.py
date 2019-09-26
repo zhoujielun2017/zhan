@@ -13,8 +13,8 @@ def all():
         print(user.mobile)
 
 
-def page(page: Pagination):
-    users = GiftCard.objects.paginate_field(page.page, page.page_size)
+def page(page: Pagination, **kwargs):
+    users = GiftCard.objects.paginate_field(page.page, page.page_size, **kwargs)
     return users
 
 

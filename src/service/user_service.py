@@ -49,6 +49,7 @@ def save(userSave: UserSave) -> str:
     owner = User()
     owner.mobile = userSave.mobile
     owner.password = userSave.password
+    owner.head_url = userSave.head_url
     owner.save()
     return str(owner.id)
 
