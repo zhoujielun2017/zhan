@@ -19,13 +19,19 @@ class GiftCardServiceTest(unittest.TestCase):
         self.assertEqual(self.code.code(), "0120190101000011")
         gift_card = gift_card_service.find_by_code(self.code.code())
         if not gift_card:
-            gift_card_service.save(self.code)
+            gift_card = gift_card_service.save(self.code)
+            self.assertEqual(gift_card.status, const.GIFT_NOT_BIND)
 
     def tearDown(self):
         gift_card = gift_card_service.find_by_code(self.code.code())
         gift_card_service.delete(gift_card.id)
         gift_card = gift_card_service.find_by_code(self.code.code())
         self.assertIsNone(gift_card)
+
+    def test_bind_product(self):
+        gift_card_service.update_bind_product([self.code.code()], "test_product_id")
+        gift_card = gift_card_service.find_by_code(self.code.code())
+        self.assertEqual(gift_card.status, const.GIFT_VALID)
 
     def test_find_by_code(self):
         return gift_card_service.find_by_code(self.code.code())

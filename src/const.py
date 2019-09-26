@@ -17,3 +17,5 @@ class Const(object):
 const = Const()
 const.GIFT_CARD_USED = 2
 const.GIFT_CARD_EXPIRE = -1
+const.GIFT_VALID = 1
+const.GIFT_NOT_BIND = 0

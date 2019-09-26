@@ -2,6 +2,7 @@ import random
 
 from mongoengine import DoesNotExist
 
+from const import const
 from model.gift_card import GiftCard
 from model.gift_card_code import GiftCardCode
 from model.pagination import Pagination
@@ -36,7 +37,10 @@ def save(code: GiftCardCode) -> GiftCard:
     p.code = code.code()
     r1 = random.randint(100000000, 999999999)
     r2 = random.randint(100000000, 999999999)
-    p.status = 0
+    if not p.product_id:
+        p.status = const.GIFT_NOT_BIND
+    else:
+        p.status = const.GIFT_VALID
     p.password = str(r1) + str(r2)
     return p.save()
 
@@ -52,7 +56,7 @@ def delete(id: str):
 def update_used(code: str, password: str) -> GiftCard:
     p = find_by_code(code)
     if p.password == password:
-        p.update(status=2)
+        p.update(status=const.GIFT_CARD_USED)
     return p
 
 
@@ -68,4 +72,4 @@ def update_bind_user(code: str, password: str, user_id: str) -> GiftCard:
 def update_bind_product(codes, product_id: str) -> GiftCard:
     for code in codes:
         p = find_by_code(code)
-        p.update(product_id=product_id)
+        p.update(status=const.GIFT_VALID, product_id=product_id)

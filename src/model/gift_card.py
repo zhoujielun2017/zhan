@@ -12,7 +12,7 @@ class GiftCard(Document):
     product_id = StringField()
     code = StringField(unique=True)
     password = StringField()
-
+    # 0 未绑定 "1有效 -1过期 2已使用"
     status = IntField(default=1)
     expire_time = DateTimeField()
     create_time = DateTimeField(default=datetime.datetime.utcnow)
