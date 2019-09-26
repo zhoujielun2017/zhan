@@ -76,11 +76,11 @@ def search():
     page = request.args.get("page")
     page_size = request.args.get("page_size")
     p = Pagination(page, page_size)
-    id = product_service.page(p)
-    return jsonify(Result().success(id.to_dict()))
+    page = product_service.page(p)
+    return jsonify(Result().success(page.to_dict()))
 
 
-@product.route('/<id>', methods=['DELETE'])
-def delete(id_):
-    product_service.delete(id_)
+@product.route('/<pid>', methods=['DELETE'])
+def delete(pid):
+    product_service.delete(pid)
     return jsonify(Result().success())

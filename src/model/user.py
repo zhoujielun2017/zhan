@@ -11,6 +11,7 @@ class User(Document):
     # userid = StringField(default=datetime.datetime.utcnow)
     name = StringField()
     mobile = StringField(unique=True)
+    head_url = StringField()
     password = StringField()
     # 1 有效
     status = IntField(default=1)
@@ -27,6 +28,7 @@ class User(Document):
             "id": str(self.id),
             "mobile": self.mobile,
             "status": self.status,
-            "type": self.status,
+            "type": self.type,
+            "head_url": self.head_url,
             "create_time": self.create_time.strftime('%Y-%m-%d %H:%M:%S'),
             "update_time": self.update_time.strftime('%Y-%m-%d %H:%M:%S')}

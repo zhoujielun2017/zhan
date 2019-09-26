@@ -15,13 +15,13 @@ def all():
         print(user.mobile)
 
 
-def find_by_id(id: str):
+def find_by_id(uid: str):
     try:
-        return User.objects.get(pk=id)
+        return User.objects.get(pk=uid)
     except DoesNotExist:
         return None
     except ValidationError:
-        print("id length is wrong")
+        print("id length is wrong %s" % uid)
         return None
 
 

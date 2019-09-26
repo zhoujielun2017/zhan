@@ -22,6 +22,7 @@ class CreateOrdByGiftCardTest(unittest.TestCase):
         product_service.delete(str(p.id))
         p2 = product_service.find_by_code(self.product_save.code)
         self.assertIsNone(p2)
+        self.delete_ord()
 
     def get_product(self):
         save = ProductSave()
@@ -59,6 +60,12 @@ class CreateOrdByGiftCardTest(unittest.TestCase):
         gift_card = gift_card_service.find_by_code(r.code())
         gift_card.update(status=1, product_id=str(self.product.id))
         self.gift_card = gift_card
+
+    def delete_ord(self):
+        response = self.client.delete('/ord/%s' % self.ord_id)
+        json_data = response.data
+        json_dict = json.loads(json_data)
+        self.assertEqual(json_dict['code'], "success")
 
     def test_save_gift_card(self):
         jsonstr = json.dumps({

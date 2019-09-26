@@ -1,0 +1,18 @@
+删除订单
+---
+tags:
+  - ord
+parameters:
+  - name: id
+    in: path
+    default: 5d7f604da64db20db7306ab2
+responses:
+  200:
+    description: description
+    schema:
+      type: object
+      properties:
+        code:
+          type: string
+          enum: ['success','ord.not.exist','ord.not.yours']
+          description: ''

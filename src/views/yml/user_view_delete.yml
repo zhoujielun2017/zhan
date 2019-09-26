@@ -1,0 +1,18 @@
+删除用户
+---
+tags:
+  - user
+parameters:
+  - name: id
+    in: path
+    default: 5d8345c01c505d2c0d4ca3da
+responses:
+  200:
+    description: description
+    schema:
+      type: object
+      properties:
+        code:
+          type: string
+          enum: ['success',"error.delete.yourself"]
+          description: ''

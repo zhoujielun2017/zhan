@@ -1,0 +1,18 @@
+根据用户id返回用户详情
+---
+tags:
+  - user
+parameters:
+  - name: id
+    in: path
+    default: 5d8345c01c505d2c0d4ca3da
+responses:
+  200:
+    description: description
+    schema:
+      type: object
+      properties:
+        code:
+          type: string
+          enum: ['success',"user.not.exist"]
+          description: ''

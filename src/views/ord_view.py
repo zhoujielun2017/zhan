@@ -116,3 +116,19 @@ def detail(id):
                                      "area": None if not detail.get("area") else detail.get("area").to_dict(),
                                      "gift_card": None if not detail.get("gift_card") else detail.get(
                                          "gift_card").to_dict()}))
+
+
+@ord.route('/<oid>', methods=['DELETE'])
+@swag_from("yml/ord_view_delete.yml")
+def delete(oid):
+    user_id = session.get("user_id")
+    orddb = ord_service.find_by_id(oid)
+    if not orddb:
+        return jsonify(Result().fail(code="ord.not.exists"))
+    if not orddb['ord'].user_id:
+        ord_service.delete(oid)
+        return jsonify(Result().success())
+    if orddb['ord'].user_id != user_id:
+        return jsonify(Result().fail(code="ord.not.yours"))
+    ord_service.delete(oid)
+    return jsonify(Result().success())

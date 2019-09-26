@@ -11,12 +11,13 @@ from service import user_service
 user = Blueprint('user', __name__)
 
 
-@user.route('/<id>')
-def detail(id):
-    mobile = session.get("mobile")
-    user = {'mobile': mobile}
-    p = user_service.find_by_code(id)
-    return jsonify(Result().success())
+@user.route('/<uid>', methods=['GET'])
+@swag_from("yml/user_view_detail.yml")
+def detail(uid):
+    p = user_service.find_by_id(uid)
+    if not p:
+        return jsonify(Result().fail(code="user.not.exist"))
+    return jsonify(Result().success(p.to_dict()))
 
 
 @user.route('/users', methods=['POST'])
@@ -36,8 +37,8 @@ def save():
     save = UserSave()
     save.mobile = mobile
     save.password = password
-    id = user_service.save(save)
-    return jsonify(Result().success({"id": id}))
+    uid = user_service.save(save)
+    return jsonify(Result().success({"id": uid}))
 
 
 @user.route('/users', methods=['PUT'])
@@ -57,7 +58,7 @@ def update():
     save = UserSave()
     save.mobile = mobile
     save.password = password
-    id = user_service.update(save)
+    uid = user_service.update(save)
     return jsonify(Result().success())
 
 
@@ -68,16 +69,20 @@ def search():
     page_size = request.args.get("page_size")
     mobile = request.args.get("mobile")
     p = Pagination(page, page_size)
-    id = user_service.page(p, mobile__contains=mobile)
+    page = user_service.page(p, mobile__contains=mobile)
     # logging.debug("This is a debug log.哈哈")
     # logging.info("This is a info log.")
     # current_app.logger.warning("This is a warning log.")
     # current_app.logger.error("This is a error log.")
     # current_app.logger.critical("This is a critical log.")
-    return jsonify(Result().success(id.to_dict()))
+    return jsonify(Result().success(page.to_dict()))
 
 
-@user.route('/<id>', methods=['DELETE'])
-def delete(id):
-    user_service.delete(id)
-    return '{"code": "success","data":"%s"}' % id
+@user.route('/<uid>', methods=['DELETE'])
+@swag_from("yml/user_view_delete.yml")
+def delete(uid):
+    user_id = session.get("user_id")
+    if user_id == uid:
+        return jsonify(Result().fail(code="error.delete.yourself"))
+    user_service.delete(uid)
+    return jsonify(Result().success())
