@@ -6,7 +6,7 @@ class MD5Test(unittest.TestCase):
 
     def test_md5(self):
         m = hashlib.md5()
-        m.update(b'zxcvzxcvgithub.com')
+        m.update("zxcvzxcvgithub.com".encode(encoding="utf-8"))
         self.assertEqual(m.hexdigest(), "dd1d964df1f16b047d6c814fd5037674")
         m2 = hashlib.md5()
         m2.update(b'zxcvzxcv163.com')

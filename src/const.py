@@ -15,7 +15,11 @@ class Const(object):
 
 
 const = Const()
+# gift card
 const.GIFT_CARD_USED = 2
 const.GIFT_CARD_EXPIRE = -1
 const.GIFT_VALID = 1
 const.GIFT_NOT_BIND = 0
+# session
+const.SESSION_USER_ID = "user_id"
+const.SESSION_MOBILE = "mobile"

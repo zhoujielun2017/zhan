@@ -5,9 +5,9 @@ from flask import Blueprint, request, json, jsonify, session
 
 from model.ord_product import OrdProduct
 from model.ord_save import OrdSave
-from model.pagination import Pagination
 from model.result import Result
 from service import ord_service, product_service, gift_card_service
+from views.util.request_util import RequestUtil
 
 ord = Blueprint('ord', __name__)
 
@@ -95,9 +95,7 @@ def create_gift_card():
 @swag_from("yml/ord_view_get.yml")
 def page():
     session.get("user_id")
-    page = request.args.get("page")
-    page_size = request.args.get("page_size")
-    p = Pagination(page, page_size)
+    p = RequestUtil.get_pagination(request)
     id = ord_service.page(p)
     return jsonify(Result().success(id))
 
@@ -105,7 +103,7 @@ def page():
 @ord.route('/<id>', methods=['GET'])
 @swag_from("yml/ord_view_detail.yml")
 def detail(id):
-    user_id = session.get("user_id")
+    user_id = RequestUtil.get_user_id(session)
     detail = ord_service.find_by_id(id)
     if not detail or not detail.get("ord"):
         return jsonify(Result().fail(code="ord.not.exist"))
@@ -121,14 +119,14 @@ def detail(id):
 @ord.route('/<oid>', methods=['DELETE'])
 @swag_from("yml/ord_view_delete.yml")
 def delete(oid):
-    user_id = session.get("user_id")
-    orddb = ord_service.find_by_id(oid)
-    if not orddb:
+    user_id = RequestUtil.get_user_id(session)
+    ord_db = ord_service.find_by_id(oid)
+    if not ord_db:
         return jsonify(Result().fail(code="ord.not.exists"))
-    if not orddb['ord'].user_id:
+    if not ord_db['ord'].user_id:
         ord_service.delete(oid)
         return jsonify(Result().success())
-    if orddb['ord'].user_id != user_id:
+    if ord_db['ord'].user_id != user_id:
         return jsonify(Result().fail(code="ord.not.yours"))
     ord_service.delete(oid)
     return jsonify(Result().success())

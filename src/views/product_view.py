@@ -75,7 +75,7 @@ def update():
     save.price = price
     save.main_pic = main_pic
     save.pics = pics
-    id = product_service.update(save)
+    product_service.update(save)
     return jsonify(Result().success())
 
 
@@ -90,6 +90,7 @@ def search():
 
 
 @product.route('/<pid>', methods=['DELETE'])
+@swag_from("yml/product_view_delete.yml")
 def delete(pid):
     product_service.delete(pid)
     return jsonify(Result().success())

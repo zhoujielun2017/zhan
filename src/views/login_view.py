@@ -1,3 +1,4 @@
+import datetime
 from json import JSONDecodeError
 
 from flasgger import swag_from
@@ -26,6 +27,7 @@ def login_in():
     if user:
         session["user_id"] = str(user.id)
         session["mobile"] = str(user.mobile)
+        user.update(login_time=datetime.datetime.now())
         return jsonify(Result().success({"id": str(user.id)}))
     else:
         return jsonify(Result().fail(code="user.not.exists", msg="user not exists"))

@@ -1,4 +1,4 @@
-删除用户收货地址(用户使用)
+根据id获取用户收货地址(用户使用)
 ---
 tags:
   - user_address
@@ -10,7 +10,7 @@ parameters:
       properties:
         id:
           type: string
-          example: 1000
+          example: ppppp
 responses:
   200:
     description: description

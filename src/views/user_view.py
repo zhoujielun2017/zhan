@@ -1,12 +1,14 @@
+import datetime
 from json import JSONDecodeError
 
 from flasgger import swag_from
-from flask import Blueprint, request, session, json, jsonify
+from flask import Blueprint, request, session, json, jsonify, current_app
 
-from model.pagination import Pagination
+from const import const
 from model.result import Result
 from model.user_save import UserSave
 from service import user_service
+from views.util.request_util import RequestUtil
 
 user = Blueprint('user', __name__)
 
@@ -46,9 +48,8 @@ def save():
 @user.route('/users', methods=['PUT'])
 @swag_from("yml/user_view_put.yml")
 def update():
-    content = request.data
     try:
-        data = json.loads(str(content, encoding="utf-8"))
+        data = json.loads(str(request.data, encoding="utf-8"))
     except JSONDecodeError:
         return jsonify(Result().fail(code="error.json"))
     mobile = data.get('mobile')
@@ -64,26 +65,59 @@ def update():
     return jsonify(Result().success())
 
 
+@user.route('/password', methods=['PUT'])
+@swag_from("yml/user_view_password.yml")
+def update_password():
+    user_id = session.get(const.SESSION_USER_ID)
+    content = request.data
+    try:
+        data = json.loads(str(content, encoding="utf-8"))
+    except JSONDecodeError:
+        return jsonify(Result().fail(code="error.json"))
+    password_old = data.get('password_old')
+    password_new1 = data.get('password_new1')
+    password_new2 = data.get('password_new2')
+    if password_new1 != password_new2:
+        return jsonify(Result().fail(code="new_password.not.equal"))
+    u = user_service.find_by_id(user_id)
+    if password_old != u.password:
+        return jsonify(Result().fail(code="old_password.not.equal"))
+    u.update(password=password_new1, update_time=datetime.datetime.now())
+    return jsonify(Result().success())
+
+
+@user.route('/head', methods=['PUT'])
+@swag_from("yml/user_view_head.yml")
+def update_head():
+    user_id = RequestUtil.get_user_id(session)
+    try:
+        data = json.loads(str(request.data, encoding="utf-8"))
+    except JSONDecodeError:
+        return jsonify(Result().fail(code="error.json"))
+    head = data.get('head_url')
+    if not head:
+        return jsonify(Result().fail(code="error.head.null"))
+    u = user_service.find_by_id(user_id)
+    if not u:
+        current_app.logger.warn("can not find the user %s" % user_id)
+        return jsonify(Result().fail(code="error.not.exists"))
+    u.update(head_url=head, update_time=datetime.datetime.now())
+    return jsonify(Result().success())
+
+
 @user.route('/users', methods=['GET'])
 @swag_from("yml/user_view_get.yml")
 def search():
-    page = request.args.get("page")
-    page_size = request.args.get("page_size")
+    p = RequestUtil.get_pagination(request)
     mobile = request.args.get("mobile")
-    p = Pagination(page, page_size)
     page = user_service.page(p, mobile__contains=mobile)
-    # logging.debug("This is a debug log.哈哈")
-    # logging.info("This is a info log.")
-    # current_app.logger.warning("This is a warning log.")
-    # current_app.logger.error("This is a error log.")
-    # current_app.logger.critical("This is a critical log.")
     return jsonify(Result().success(page.to_dict()))
 
 
 @user.route('/<uid>', methods=['DELETE'])
 @swag_from("yml/user_view_delete.yml")
 def delete(uid):
-    user_id = session.get("user_id")
+    user_id = session.get(const.SESSION_USER_ID)
     if user_id == uid:
         return jsonify(Result().fail(code="error.delete.yourself"))
     user_service.delete(uid)

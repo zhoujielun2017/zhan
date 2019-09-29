@@ -1,0 +1,18 @@
+根据id删除商品
+---
+tags:
+  - product
+parameters:
+  - name: id
+    in: path
+    default: 1
+responses:
+  200:
+    description: description
+    schema:
+      type: object
+      properties:
+        code:
+          type: string
+          enum: ['success']
+          description: ''

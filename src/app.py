@@ -47,7 +47,8 @@ def before_user():
             return
     else:
         if current_app.config.get("TESTING"):
-            session["user_id"] = "5d83041c71a281581fe0b93b"
+            if not 'user_id' in session:
+                session["user_id"] = "5d83041c71a281581fe0b93b"
             return
         if not 'user_id' in session:
             app.logger.info("not login path %s" % path)

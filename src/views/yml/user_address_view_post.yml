@@ -5,27 +5,27 @@ tags:
 parameters:
   - name: body
     in: body
-    description: JSON parameters.
+    description: "11 北京市 1101 市辖区 110101 东城区"
     schema:
       properties:
         area1_id:
           type: string
-          example: 1000
+          example: 11
         area2_id:
           type: string
-          example: 10001
+          example: 1101
         area3_id:
           type: string
-          example: 100011
+          example: 110101
         area1_name:
           type: string
           example: 北京
         area2_name:
           type: string
-          example: 东城区
+          example: 市辖区
         area3_name:
           type: string
-          example: 朝阳大街
+          example: 东城区
         mobile:
           type: string
           example: 18666666666

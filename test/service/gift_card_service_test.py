@@ -43,12 +43,17 @@ class GiftCardServiceTest(unittest.TestCase):
         self.assertEqual(gift_card2.status, const.GIFT_CARD_USED)
 
     def test_page(self):
+        self.test_update_used()
         r = Pagination(1, 10)
-        pros = gift_card_service.page(r, status=2)
+        pros = gift_card_service.page(r, status=const.GIFT_CARD_USED)
         for item in pros.items:
-            self.assertEqual(item.status, 2)
+            self.assertEqual(item.status, const.GIFT_CARD_USED)
         self.assertGreater(pros.total, 0)
 
     def test_page_status_1(self):
+        self.test_bind_product()
         r = Pagination(1, 10)
-        pros = gift_card_service.page(r, status=1)
+        pros = gift_card_service.page(r, status=const.GIFT_VALID)
+        for item in pros.items:
+            self.assertEqual(item.status, const.GIFT_VALID)
+        self.assertGreater(pros.total, 0)

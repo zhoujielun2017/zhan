@@ -1,4 +1,5 @@
 class UserSave(object):
+    head_url = None
 
     @property
     def id(self):

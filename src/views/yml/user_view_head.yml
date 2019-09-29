@@ -1,16 +1,17 @@
-删除用户收货地址(用户使用)
+更新用户头像
 ---
 tags:
-  - user_address
+  - user
 parameters:
-  - name: id
-    in: path
+  - name: body
+    in: body
     description: JSON parameters.
     schema:
       properties:
-        id:
+        head_url:
           type: string
-          example: 1000
+          description: head_url.
+          example: /head_url/head_url.jpg
 responses:
   200:
     description: description
@@ -19,5 +20,5 @@ responses:
       properties:
         code:
           type: string
-          enum: ['success','error.not.yours']
+          enum: ['success','error.head.null','error.not.exists']
           description: ''

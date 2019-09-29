@@ -1,6 +1,8 @@
 import json
 import unittest
 
+from werkzeug.http import parse_cookie
+
 from app import app
 from test.service.user_service_test import UserServiceTest
 
@@ -32,3 +34,14 @@ class LoginTest(unittest.TestCase):
         json_dict = json.loads(json_data)
         self.assertIn('code', json_dict)
         self.assertEqual(json_dict['code'], 'success')
+        cookies = response.headers.getlist('Set-Cookie')
+        session = parse_cookie(cookies[0])['session']
+        self.client.set_cookie('localhost', 'session', session)
+    # def login_required(self):
+    #     rv = self.client.post('/login', data=dict(
+    #         account=PHONE,
+    #         password=PASSWORD
+    #     ))
+    #     cookies = rv.headers.getlist('Set-Cookie')
+    #     session = parse_cookie(cookies[0])['session']
+    #     self.client.set_cookie('localhost', 'session', session)
