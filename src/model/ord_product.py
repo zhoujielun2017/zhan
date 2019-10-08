@@ -4,6 +4,7 @@ from mongoengine import *
 
 connect(db='ord')
 
+
 class OrdProduct(Document):
     ord_id = StringField()
     product_id = StringField()
@@ -19,5 +20,6 @@ class OrdProduct(Document):
             "product_id": self.product_id,
             "title": self.title,
             "main_pic": self.main_pic,
+            "price": self.price,
             "num": self.num
         }

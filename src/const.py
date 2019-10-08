@@ -23,3 +23,4 @@ const.GIFT_NOT_BIND = 0
 # session
 const.SESSION_USER_ID = "user_id"
 const.SESSION_MOBILE = "mobile"
+const.SESSION_CAPTCHA = "captcha"

@@ -1,28 +1,27 @@
 import json
-import unittest
 
-from app import app
 from service import user_service
-from test.views.login_view_test import LoginTest
+from test.views.login import LoginTest
 
 
-class UserViewTest(unittest.TestCase):
+class UserViewTest(LoginTest):
 
     def setUp(self):
-        app.testing = True
-        self.client = app.test_client()
-        LoginTest.test_login_in(self)
+        super().setUp()
         self.save_user()
 
     def tearDown(self):
-        # self.delete_user()
-        pass
+        self.delete_user()
+        user = user_service.find_by_id(self.user_id)
+        self.assertIsNone(user)
+        # pass
 
     def save_user(self):
-        mobile = 123
+        self.mobile = 18566667777
+        self.password = 18566667777
         jsonstr = json.dumps({
-            "mobile": mobile,
-            "password": 123
+            "mobile": self.mobile,
+            "password": self.password
         })
         response = self.client.post('/user/users', data=jsonstr)
         json_data = response.data
@@ -32,7 +31,7 @@ class UserViewTest(unittest.TestCase):
             self.assertIsNotNone(uid)
             self.user_id = uid
         else:
-            user = user_service.find_by_mobile(mobile)
+            user = user_service.find_by_mobile(self.mobile)
             self.user_id = str(user.id)
 
     def delete_user(self):
@@ -55,6 +54,17 @@ class UserViewTest(unittest.TestCase):
             "head_url": "/head/head_url.jpg"
         })
         response = self.client.put('/user/head', data=jsonstr)
+        json_data = response.data
+        json_dict = json.loads(json_data)
+        self.assertEqual(json_dict['code'], "success")
+
+    def test_update_user_password(self):
+        jsonstr = json.dumps({
+            "password_old": self.login_user.password,
+            "password_new1": 123,
+            "password_new2": 123
+        })
+        response = self.client.put('/user/password', data=jsonstr)
         json_data = response.data
         json_dict = json.loads(json_data)
         self.assertEqual(json_dict['code'], "success")

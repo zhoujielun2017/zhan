@@ -82,7 +82,7 @@ def update_password():
     u = user_service.find_by_id(user_id)
     if password_old != u.password:
         return jsonify(Result().fail(code="old_password.not.equal"))
-    u.update(password=password_new1, update_time=datetime.datetime.now())
+    u.update(password=str(password_new1), update_time=datetime.datetime.now())
     return jsonify(Result().success())
 
 

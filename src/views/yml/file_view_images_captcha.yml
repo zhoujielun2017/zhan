@@ -1,0 +1,7 @@
+验证码
+---
+tags:
+  - file
+responses:
+  200:
+    description: captcha

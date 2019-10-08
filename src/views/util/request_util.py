@@ -14,3 +14,8 @@ class RequestUtil:
     def get_user_id(session) -> str:
         user_id = session.get(const.SESSION_USER_ID)
         return user_id
+
+    @staticmethod
+    def get_captcha(session) -> str:
+        user_id = session.get(const.SESSION_CAPTCHA)
+        return user_id

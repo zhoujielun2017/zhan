@@ -16,6 +16,10 @@ parameters:
           type: string
           description: password.
           example: 123
+        captcha:
+          type: string
+          description: captcha.
+          example: adcdf
 responses:
   200:
     description: description

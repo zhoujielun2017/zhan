@@ -1,13 +1,15 @@
 import datetime
 import os
-import os
 import time
-from PIL import Image
-import shortuuid
-from flasgger import swag_from
-from flask import Blueprint, render_template, request, jsonify, current_app, Response
 
+import shortuuid
+from PIL import Image
+from flasgger import swag_from
+from flask import Blueprint, render_template, request, jsonify, current_app, Response, session
+
+from const import const
 from model.result import Result
+from views.util.captcha import Captcha
 
 file = Blueprint('file', __name__)
 
@@ -23,6 +25,15 @@ def allowed_file(filename):
 @swag_from("yml/file_view_images_upload.yml")
 def upload_view():
     return render_template("product/upload.html")
+
+
+@file.route('/captcha', methods=['GET'])
+@swag_from("yml/file_view_images_captcha.yml")
+def captcha():
+    img = Captcha()
+    data, valid_str = img.getValidCodeImg()
+    session[const.SESSION_CAPTCHA] = valid_str
+    return Response(data, mimetype="image/jpeg")
 
 
 @file.route('/images', methods=['POST'], strict_slashes=False)

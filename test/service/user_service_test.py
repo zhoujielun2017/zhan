@@ -13,12 +13,12 @@ class UserServiceTest(unittest.TestCase):
         self.user = save
         user = user_service.find_by_mobile(save.mobile)
         if not user:
-            self.user_id = user_service.save(save)
+            self.user.id = user_service.save(save)
         else:
-            self.user_id = str(user.id)
+            self.user.id = str(user.id)
 
     def tearDown(self) -> None:
-        user_service.delete(self.user_id)
+        user_service.delete(self.user.id)
 
     def test_find_by_user(self):
         user = user_service.find_by_user(self.user.mobile, self.user.password)

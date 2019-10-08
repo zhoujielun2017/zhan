@@ -7,6 +7,7 @@ from flask import Blueprint, request, session, json, jsonify
 from model.result import Result
 from model.user_save import UserSave
 from service import user_service
+from views.util.request_util import RequestUtil
 
 login = Blueprint('login', __name__)
 
@@ -21,8 +22,13 @@ def login_in():
         return jsonify(Result().fail(code="error.json"))
     mobile = data.get('mobile')
     password = data.get('password')
+    code = data.get('code')
     if not mobile or not password:
         return jsonify(Result().fail(code="param.null", msg="Invalid username/password"))
+    if not code:
+        captcha = RequestUtil.get_captcha(session)
+        if code != captcha:
+            return jsonify(Result().fail(code="error.captcha"))
     user = user_service.find_by_user(mobile, password)
     if user:
         session["user_id"] = str(user.id)
