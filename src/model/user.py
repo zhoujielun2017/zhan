@@ -13,9 +13,9 @@ class User(Document):
     mobile = StringField(unique=True)
     head_url = StringField()
     password = StringField()
-    # 1 有效
+    # 1 有效 0 无效
     status = IntField(default=1)
-    # 1 普通用户
+    # 1 普通用户 2 管理员
     type = IntField(default=1)
     login_time = DateTimeField()
     create_time = DateTimeField(default=datetime.datetime.utcnow)
