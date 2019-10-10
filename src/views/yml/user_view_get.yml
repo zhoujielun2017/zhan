@@ -14,7 +14,7 @@ parameters:
     default: 155566
 responses:
   200:
-    description: description
+    description: status 1 有效 0 无效 ;type 1 普通用户 2 管理员
     schema:
       type: object
       properties:
