@@ -6,7 +6,7 @@ from flask import Flask
 
 from project import project_dir
 from views import area_view, product_view, sell_view, ord_view, login_view, user_view, gift_card_view, file_view, \
-    user_address_view
+    user_address_view, index_view
 from views.manager import user
 
 
@@ -54,6 +54,7 @@ def blueprint(app):
     app.register_blueprint(sell_view.mod)
     app.register_blueprint(user.muser, url_prefix='/manager/user')
     app.register_blueprint(user_view.user, url_prefix='/user')
+    app.register_blueprint(index_view.index, url_prefix='/')
     app.register_blueprint(area_view.area, url_prefix='/area')
     app.register_blueprint(file_view.file, url_prefix='/file')
     app.register_blueprint(gift_card_view.gift_card, url_prefix='/gift_card')
