@@ -2,7 +2,7 @@ from json import JSONDecodeError
 
 import flask_excel as excel
 from flasgger import swag_from
-from flask import Blueprint, request, session, json, jsonify
+from flask import Blueprint, request, session, json, jsonify, current_app
 
 from model.gift_card_code import GiftCardCode
 from model.result import Result
@@ -130,6 +130,7 @@ def search():
 def find_by_code(code):
     gift = gift_card_service.find_by_code(code)
     if not gift:
+        current_app.logger.warn("can not find the gift code: %s" % code)
         return jsonify(Result().fail(code="gift_card.not.found"))
     pro = product_service.find_by_id(gift.product_id)
     if not pro:
