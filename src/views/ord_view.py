@@ -1,7 +1,7 @@
 from json import JSONDecodeError
 
 from flasgger import swag_from
-from flask import Blueprint, request, json, jsonify, session
+from flask import Blueprint, request, json, jsonify, session, current_app
 
 from model.ord_product import OrdProduct
 from model.ord_save import OrdSave
@@ -62,6 +62,7 @@ def create_gift_card():
     save = OrdSave()
     gift = gift_card_service.find_by_code(code)
     if not gift:
+        current_app.logger.warn("can not find the gift code: %s" % code)
         return jsonify(Result().fail(code="gift.not.found"))
     if password != gift.password:
         return jsonify(Result().fail(code="gift.password.error"))
