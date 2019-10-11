@@ -6,7 +6,7 @@ connect(db='ord')
 
 
 class OrdLog(Document):
-    orderid = StringField()
+    ord_id = StringField()
     create_time = DateTimeField(default=datetime.datetime.utcnow)
 
     meta = {'collection': 'ord_log'}

@@ -1,15 +1,15 @@
 <html>
-  <head>
+<head>
     {% if title %}
     <title>{{title}}</title>
     {% else %}
     <title>website</title>
     {% endif %}
-      <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
-      <script src="{{ url_for('static',filename='js/index.js') }}"></script>
-      <script src="{{ url_for('static',filename='js/jquery-3.3.1.min.js') }}"></script>
-  </head>
-  <body>
-    {% block content %}{% endblock %}
-  </body>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
+    <script src="{{ url_for('static',filename='js/index.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery-3.3.1.min.js') }}"></script>
+</head>
+<body>
+{% block content %}{% endblock %}
+</body>
 </html>

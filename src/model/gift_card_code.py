@@ -1,5 +1,7 @@
 class GiftCardCode(object):
-    product_id = None
+
+    def __init__(self) -> None:
+        self.product_id = None
 
     @property
     def area(self):

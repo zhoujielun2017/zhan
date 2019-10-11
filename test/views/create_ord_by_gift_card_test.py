@@ -22,7 +22,7 @@ class CreateOrdByGiftCardTest(unittest.TestCase):
         product_service.delete(str(p.id))
         p2 = product_service.find_by_code(self.product_save.code)
         self.assertIsNone(p2)
-        self.delete_ord()
+        # self.delete_ord()
 
     def get_product(self):
         save = ProductSave()

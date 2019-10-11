@@ -1,27 +1,27 @@
 {% extends "sell/base.html" %}
 {% block content %}
 
-<form  id="loginForm">
+<form id="loginForm">
     <input type="text" name="mobile" value="">
     <input type="password" name="password" value="">
     <input id="submit" type="submit" value="登录">
 </form>
 <p id="error"></p>
 <script>
-    $("#loginForm").on("submit",function(){
+    $("#loginForm").on("submit", function () {
         var data = {
-                mobile:$("[name=mobile]").val(),
-                password:$("[name=password]").val()
-            };
-         $.ajax({
+            mobile: $("[name=mobile]").val(),
+            password: $("[name=password]").val()
+        };
+        $.ajax({
             url: "/sell/login",
             method: "POST",
-            contentType:'application/json;charset=utf-8',
+            contentType: 'application/json;charset=utf-8',
             data: JSON.stringify(data),
             dataType: 'json',
             success: function (data) {
                 if (data.code === "success") {
-                    location.href="/product/5cTJxqUoUPXmucpTPni9ZL"
+                    location.href = "/product/5cTJxqUoUPXmucpTPni9ZL"
                 }
             },
             error: function (err) {

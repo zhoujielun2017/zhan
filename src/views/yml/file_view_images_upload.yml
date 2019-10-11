@@ -5,6 +5,6 @@ tags:
 responses:
   200:
     description: <p>origin /file/img/1568007910_XGoChLmC.png</p>
-                 <p>width:600px /file/img/1568007910_XGoChLmC_600.png</p>
-                 <p>300x300 /file/img/1568007910_XGoChLmC_300x300.png</p>
-                 <p>100x100 /file/img/1568007910_XGoChLmC_100x100.png</p>
+      <p>width:600px /file/img/1568007910_XGoChLmC_600.png</p>
+      <p>300x300 /file/img/1568007910_XGoChLmC_300x300.png</p>
+      <p>100x100 /file/img/1568007910_XGoChLmC_100x100.png</p>
