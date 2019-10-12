@@ -1,18 +1,16 @@
 import json
-import unittest
 
-from app import app
 from model.gift_card_code import GiftCardCode
 from model.product_save import ProductSave
 from service import gift_card_service, product_service
+from test.views.login import LoginTest
 
 
-class CreateOrdByGiftCardTest(unittest.TestCase):
+class CreateOrdByGiftCardTest(LoginTest):
     """为登录逻辑编写测试案例"""
 
     def setUp(self):
-        app.testing = True
-        self.client = app.test_client()
+        super().setUp()
         self.get_product()
         self.save_gift_card()
         self.get_gift_card()
@@ -100,3 +98,15 @@ class CreateOrdByGiftCardTest(unittest.TestCase):
         self.assertIsNotNone(data['area']['name'])
         self.assertIsNotNone(data['area']['mobile'])
         self.assertIsNotNone(data['area']['address'])
+
+    def test_page(self):
+        response = self.client.get('/ord/ords')
+        json_data = response.data
+        json_dict = json.loads(json_data)
+        data = json_dict['data']
+        self.assertEqual(json_dict['code'], "success")
+        for o in data['list']:
+            # print(o['ord'])
+            # self.assertIsNotNone(o['ord']['user_id'])
+            # print("%s " % self.login_user.id)
+            self.assertEqual(self.login_user.id, o['ord']['user_id'])

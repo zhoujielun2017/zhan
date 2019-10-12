@@ -95,9 +95,9 @@ def create_gift_card():
 @ord.route('/ords', methods=['GET'])
 @swag_from("yml/ord_view_get.yml")
 def page():
-    session.get("user_id")
+    user_id = RequestUtil.get_user_id(session)
     p = RequestUtil.get_pagination(request)
-    id = ord_service.page(p)
+    id = ord_service.page(p, user_id=user_id)
     return jsonify(Result().success(id))
 
 

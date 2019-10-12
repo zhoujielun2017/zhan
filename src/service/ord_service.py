@@ -65,9 +65,9 @@ def save(dto: OrdSave):
     return str(ord.id)
 
 
-def page(page: Pagination):
+def page(page: Pagination, **kwargs):
     page_result = Ord.objects.paginate_field(page.page,
-                                             page.page_size)
+                                             page.page_size, **kwargs)
     page_obj = page_result.to_dict()
     list = []
     for ord in page_obj.get("list"):
