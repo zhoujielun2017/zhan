@@ -53,8 +53,11 @@ def reg():
     data = json.loads(str(content, encoding="utf-8"))
     mobile = data.get('mobile')
     password = data.get('password')
+    password2 = data.get('password2')
     if not mobile or not password:
         return jsonify(Result().fail(code="param.null", msg="Invalid username/password"))
+    if password != password2:
+        return jsonify(Result().fail(code="password.not.equal", msg="password not equal"))
     if user_service.find_by_mobile(mobile):
         return jsonify(Result().fail(code="user.exists", msg="user exists"))
     else:

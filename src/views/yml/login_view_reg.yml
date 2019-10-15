@@ -16,6 +16,10 @@ parameters:
           type: string
           description: password.
           example: 123
+        password2:
+          type: string
+          description: password.
+          example: 123
 responses:
   200:
     description: description
@@ -24,5 +28,5 @@ responses:
       properties:
         code:
           type: string
-          enum: ['success','param.null','user.exists']
+          enum: ['success','param.null','user.exists','password.not.equal']
           description: ''

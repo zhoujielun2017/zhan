@@ -41,11 +41,3 @@ class LoginViewTest(unittest.TestCase):
         session = parse_cookie(cookies[0])['session']
         self.client.set_cookie('localhost', 'session', session)
         return self.user_test.user
-    # def login_required(self):
-    #     rv = self.client.post('/login', data=dict(
-    #         account=PHONE,
-    #         password=PASSWORD
-    #     ))
-    #     cookies = rv.headers.getlist('Set-Cookie')
-    #     session = parse_cookie(cookies[0])['session']
-    #     self.client.set_cookie('localhost', 'session', session)
