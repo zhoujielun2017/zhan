@@ -120,5 +120,8 @@ def delete(uid):
     user_id = session.get(const.SESSION_USER_ID)
     if user_id == uid:
         return jsonify(Result().fail(code="error.delete.yourself"))
+    u = user_service.find_by_id(uid)
+    if not u:
+        return jsonify(Result().fail(code="error.not.exists"))
     user_service.delete(uid)
     return jsonify(Result().success())

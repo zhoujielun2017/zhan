@@ -14,5 +14,5 @@ responses:
       properties:
         code:
           type: string
-          enum: ['success',"error.delete.yourself"]
+          enum: ['success',"error.delete.yourself","error.not.exists"]
           description: ''

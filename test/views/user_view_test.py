@@ -41,6 +41,12 @@ class UserViewTest(LoginTest):
             json_dict = json.loads(json_data)
             self.assertEqual(json_dict['code'], "success")
 
+    def delete_user_not_exist(self):
+        response = self.client.delete('/user/test_not_exist')
+        json_data = response.data
+        json_dict = json.loads(json_data)
+        self.assertEqual(json_dict['code'], "error.not.exists")
+
     def test_detail_user(self):
         response = self.client.get('/user/%s' % str(self.user_id))
         json_data = response.data
