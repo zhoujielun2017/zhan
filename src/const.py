@@ -24,3 +24,13 @@ const.GIFT_NOT_BIND = 0
 const.SESSION_USER_ID = "user_id"
 const.SESSION_MOBILE = "mobile"
 const.SESSION_CAPTCHA = "captcha"
+
+# 1 待支付 2 已支付 3 待发货 4 已发货 5 待收货 6 已收货 7 待评价 8 已评价
+const.ORD_WAIT_PAY = 1
+const.ORD_PAID = 2
+const.ORD_WAIT_SEND = 3
+const.ORD_HAD_SEND = 4
+const.ORD_WAIT_RECEIVE = 5
+const.ORD_HAD_RECEIVE = 6
+const.ORD_WAIT_COMMENT = 7
+const.ORD_HAD_COMMENT = 8

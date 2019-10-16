@@ -83,6 +83,8 @@ class CreateOrdByGiftCardTest(LoginTest):
         json_dict = json.loads(json_data)
         self.assertEqual(json_dict['code'], "success")
         self.ord_id = json_dict['data']['id']
+        gc1 = gift_card_service.find_by_code(self.gift_card.code)
+        self.assertIsNotNone(gc1.use_time)
 
     def test_detail(self):
         self.test_save_gift_card()

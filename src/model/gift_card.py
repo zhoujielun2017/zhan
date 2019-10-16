@@ -15,8 +15,9 @@ class GiftCard(Document):
     # 0 未绑定 "1有效 -1过期 2已使用"
     status = IntField(default=1)
     expire_time = DateTimeField()
-    create_time = DateTimeField(default=datetime.datetime.utcnow)
-    update_time = DateTimeField(default=datetime.datetime.utcnow)
+    use_time = DateTimeField()
+    create_time = DateTimeField(default=datetime.datetime.now)
+    update_time = DateTimeField(default=datetime.datetime.now)
     meta = {'db_alias': 'gift_card'}
 
     def to_dict(self):
@@ -29,4 +30,5 @@ class GiftCard(Document):
             "product_id": self.product_id,
             "create_time": self.create_time.strftime('%Y-%m-%d %H:%M:%S'),
             "expire_time": None if not self.expire_time else self.expire_time.strftime('%Y-%m-%d %H:%M:%S'),
+            "use_time": None if not self.use_time else self.use_time.strftime('%Y-%m-%d %H:%M:%S'),
             "update_time": self.update_time.strftime('%Y-%m-%d %H:%M:%S')}

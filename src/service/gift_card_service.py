@@ -1,3 +1,4 @@
+import datetime
 import random
 
 from mongoengine import DoesNotExist
@@ -56,7 +57,7 @@ def delete(id: str):
 def update_used(code: str, password: str) -> GiftCard:
     p = find_by_code(code)
     if p.password == password:
-        p.update(status=const.GIFT_CARD_USED)
+        p.update(status=const.GIFT_CARD_USED, use_time=datetime.datetime.now)
     return p
 
 

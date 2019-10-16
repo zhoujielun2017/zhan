@@ -18,8 +18,8 @@ class UserAddress(Document):
     address = StringField()
     name = StringField()
     mobile = StringField()
-    create_time = DateTimeField(default=datetime.datetime.utcnow)
-    update_time = DateTimeField(default=datetime.datetime.utcnow)
+    create_time = DateTimeField(default=datetime.datetime.now)
+    update_time = DateTimeField(default=datetime.datetime.now)
 
     meta = {'db_alias': 'user_address'}
 

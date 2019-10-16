@@ -9,7 +9,7 @@ class OrdGiftCard(Document):
     ord_id = StringField()
     gift_card_code = StringField()
     gift_card_id = StringField()
-    create_time = DateTimeField(default=datetime.datetime.utcnow)
+    create_time = DateTimeField(default=datetime.datetime.now)
 
     def to_dict(self):
         return {

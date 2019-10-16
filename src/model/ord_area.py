@@ -16,7 +16,7 @@ class OrdArea(Document):
     address = StringField()
     name = StringField()
     mobile = StringField()
-    create_time = DateTimeField(default=datetime.datetime.utcnow)
+    create_time = DateTimeField(default=datetime.datetime.now)
 
     def to_dict(self):
         return {

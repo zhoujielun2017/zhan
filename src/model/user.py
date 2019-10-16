@@ -8,7 +8,7 @@ connect(alias='user', db='user')
 
 
 class User(Document):
-    # userid = StringField(default=datetime.datetime.utcnow)
+    # userid = StringField(default=datetime.datetime.now)
     name = StringField()
     mobile = StringField(unique=True)
     head_url = StringField()
@@ -18,8 +18,8 @@ class User(Document):
     # 1 普通用户 2 管理员
     type = IntField(default=1)
     login_time = DateTimeField()
-    create_time = DateTimeField(default=datetime.datetime.utcnow)
-    update_time = DateTimeField(default=datetime.datetime.utcnow)
+    create_time = DateTimeField(default=datetime.datetime.now)
+    update_time = DateTimeField(default=datetime.datetime.now)
 
     meta = {'db_alias': 'user'}
 

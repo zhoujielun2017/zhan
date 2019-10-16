@@ -3,6 +3,7 @@ from json import JSONDecodeError
 from flasgger import swag_from
 from flask import Blueprint, request, json, jsonify, session, current_app
 
+from const import const
 from model.ord_product import OrdProduct
 from model.ord_save import OrdSave
 from model.result import Result
@@ -87,7 +88,7 @@ def create_gift_card():
     save.mobile = mobile
     save.address = address
     save.user_id = user_id
-    save.status = 3
+    save.status = const.ORD_WAIT_SEND
     id = ord_service.save(save)
     return jsonify(Result().success({"id": id}))
 

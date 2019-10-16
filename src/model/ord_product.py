@@ -12,8 +12,8 @@ class OrdProduct(Document):
     main_pic = StringField()
     price = IntField()
     num = IntField()
-    create_time = DateTimeField(default=datetime.datetime.utcnow)
-    update_time = DateTimeField(default=datetime.datetime.utcnow)
+    create_time = DateTimeField(default=datetime.datetime.now)
+    update_time = DateTimeField(default=datetime.datetime.now)
 
     def to_dict(self):
         return {

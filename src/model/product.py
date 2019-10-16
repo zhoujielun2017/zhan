@@ -23,8 +23,8 @@ class Product(Document):
     view_count = LongField()
     # 库存
     stock = IntField()
-    create_time = DateTimeField(default=datetime.datetime.utcnow)
-    update_time = DateTimeField(default=datetime.datetime.utcnow)
+    create_time = DateTimeField(default=datetime.datetime.now)
+    update_time = DateTimeField(default=datetime.datetime.now)
     meta = {'db_alias': 'product'}
 
     def to_dict(self):
