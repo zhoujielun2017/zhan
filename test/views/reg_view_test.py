@@ -15,10 +15,10 @@ class RegViewTest(unittest.TestCase):
 
     def test_reg(self):
         data = {"mobile": 18577778888, "password": 123, "password2": 123}
+        user = user_service.find_by_mobile(data['mobile'])
         response = self.client.post('/login/reg', data=json.dumps(data))
         json_data = response.data
         json_dict = json.loads(json_data)
-        user = user_service.find_by_mobile(data['mobile'])
         if not user:
             self.assertEqual(json_dict['code'], "success")
         else:
